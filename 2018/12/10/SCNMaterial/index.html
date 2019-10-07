@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言当创建一个材质时，定义了一组可视化属性和它们的选项，然后您可以将它们用于场景中的多个几何图形。一个材质有几个视觉属性，每个属性都定义了SceneKit光照和阴影处理的不同部分。每个可视化属性都是SCNMaterialProperty类的一个实例，该类为SceneKit的呈现提供了一个纯色、纹理或其他2D内容。然后，材质的lightingModel属性确定SceneKit用于将视觉属性与场景中的">
+<meta name="keywords" content="Swift,SceneKit,SCNMaterial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCNMaterial">
+<meta property="og:url" content="http://yoursite.com/2018/12/10/SCNMaterial/index.html">
+<meta property="og:site_name" content="Leonardo Lu">
+<meta property="og:description" content="前言当创建一个材质时，定义了一组可视化属性和它们的选项，然后您可以将它们用于场景中的多个几何图形。一个材质有几个视觉属性，每个属性都定义了SceneKit光照和阴影处理的不同部分。每个可视化属性都是SCNMaterialProperty类的一个实例，该类为SceneKit的呈现提供了一个纯色、纹理或其他2D内容。然后，材质的lightingModel属性确定SceneKit用于将视觉属性与场景中的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/ae0a5ad4-c04c-4eac-8491-8a8ec311407a.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/60d7b841-ae16-40ce-a2ab-79ab36b438b7.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/9192ade0-d6ec-46b9-aa52-0988d3f02a88.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/b3a74868-b2ba-4e74-92b0-dfd314c22aeb.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/60d7b841-ae16-40ce-a2ab-79ab36b438b7.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/d4124591-7d69-44c2-bbc2-061fda9565a5.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/b209fa42-9bf8-4a77-90e1-e7c5f79f4224.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/194a1b48-1c03-4a10-9c6a-3c6c8665448a.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/7da498a6-88ec-4a2e-a175-ea4952a05d28.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SCNMaterial/1fb27661-a358-46dc-8aaa-96acbe481fc6.png">
+<meta property="og:updated_time" content="2018-12-11T03:15:57.406Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCNMaterial">
+<meta name="twitter:description" content="前言当创建一个材质时，定义了一组可视化属性和它们的选项，然后您可以将它们用于场景中的多个几何图形。一个材质有几个视觉属性，每个属性都定义了SceneKit光照和阴影处理的不同部分。每个可视化属性都是SCNMaterialProperty类的一个实例，该类为SceneKit的呈现提供了一个纯色、纹理或其他2D内容。然后，材质的lightingModel属性确定SceneKit用于将视觉属性与场景中的">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/10/SCNMaterial/ae0a5ad4-c04c-4eac-8491-8a8ec311407a.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/10/SCNMaterial/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SCNMaterial | Leonardo Lu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Leonardo Lu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-resume">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.qwq.name:8888/" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Resume</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/SCNMaterial/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leonardo Lu">
+      <meta itemprop="description" content="A ＝ { x | x∉A }">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leonardo Lu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SCNMaterial
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-10 17:36:19" itemprop="dateCreated datePublished" datetime="2018-12-10T17:36:19+08:00">2018-12-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-11 11:15:57" itemprop="dateModified" datetime="2018-12-11T11:15:57+08:00">2018-12-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/SceneKit/" itemprop="url" rel="index"><span itemprop="name">SceneKit</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/SceneKit/SCNMaterial/" itemprop="url" rel="index"><span itemprop="name">SCNMaterial</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2018/12/10/SCNMaterial/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/SCNMaterial/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2018/12/10/SCNMaterial/" class="leancloud_visitors" data-flag-title="SCNMaterial">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>当创建一个材质时，定义了一组可视化属性和它们的选项，然后您可以将它们用于场景中的多个几何图形。<br>一个材质有几个视觉属性，每个属性都定义了SceneKit光照和阴影处理的不同部分。每个可视化属性都是SCNMaterialProperty类的一个实例，该类为SceneKit的呈现提供了一个纯色、纹理或其他2D内容。然后，材质的lightingModel属性确定SceneKit用于将视觉属性与场景中的灯光组合在一起的公式，从而为渲染场景中的每个像素生成最终颜色。有关呈现过程的更多细节，请参见SCNMaterial.LightingModel。<br>使用SCNGeometry类的firstMaterial或materials属性将一个或多个材料附加到它的实例。多个几何图形可以引用相同的材料。在这种情况下，改变材质的属性会改变使用它的每个几何图形的外观。</p>
+<blockquote>
+<p>内容均翻译自 <a href="https://developer.apple.com/documentation" target="_blank" rel="noopener">apple developer documentation</a></p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<h1 id="SCNMaterial"><a href="#SCNMaterial" class="headerlink" title="SCNMaterial"></a>SCNMaterial</h1><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SCNMaterial</span> : <span class="title">NSObject</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">convenience</span> <span class="keyword">init</span>(mdlMaterial: <span class="type">MDLMaterial</span>)</span><br></pre></td></tr></table></figure>
+<p>always:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> material = <span class="type">SCNMaterial</span>()</span><br></pre></td></tr></table></figure>
+<h2 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h2><ul>
+<li>Creating a Material</li>
+<li>init(mdlMaterial: MDLMaterial)</li>
+<li>var name: String?</li>
+<li>Choosing a Shading Model</li>
+<li>var lightingModel: SCNMaterial.LightingModel</li>
+<li>struct SCNMaterial.LightingModel</li>
+<li>Visual Properties for Physically Based Shading</li>
+<li>var diffuse: SCNMaterialProperty</li>
+<li>var metalness: SCNMaterialProperty</li>
+<li>var roughness: SCNMaterialProperty</li>
+<li>Visual Properties for Special Effects</li>
+<li>var normal: SCNMaterialProperty</li>
+<li>var displacement: SCNMaterialProperty</li>
+<li>var emission: SCNMaterialProperty</li>
+<li>var selfIllumination: SCNMaterialProperty</li>
+<li>var ambientOcclusion: SCNMaterialProperty</li>
+<li>Visual Properties for Basic Shading</li>
+<li>var diffuse: SCNMaterialProperty</li>
+<li>var ambient: SCNMaterialProperty</li>
+<li>var specular: SCNMaterialProperty</li>
+<li>var reflective: SCNMaterialProperty</li>
+<li>var multiply: SCNMaterialProperty</li>
+<li>var transparent: SCNMaterialProperty</li>
+<li>var shininess: CGFloat</li>
+<li>var fresnelExponent: CGFloat</li>
+<li>var locksAmbientWithDiffuse: Bool</li>
+<li>Managing Opacity and Blending</li>
+<li>var transparency: CGFloat</li>
+<li>var transparencyMode: SCNTransparencyMode</li>
+<li>enum SCNTransparencyMode</li>
+<li>var blendMode: SCNBlendMode</li>
+<li>enum SCNBlendMode</li>
+<li>Customizing Rendered Appearance</li>
+<li>var isLitPerPixel: Bool</li>
+<li>var isDoubleSided: Bool</li>
+<li>var cullMode: SCNCullMode</li>
+<li>enum SCNCullMode</li>
+<li>var fillMode: SCNFillMode</li>
+<li>enum SCNFillMode</li>
+<li>Managing Render Targets</li>
+<li>var writesToDepthBuffer: Bool</li>
+<li>var readsFromDepthBuffer: Bool</li>
+<li>var colorBufferWriteMask: SCNColorMask</li>
+<li>struct SCNColorMask</li>
+</ul>
+<hr>
+<h1 id="Lighting-models"><a href="#Lighting-models" class="headerlink" title="Lighting models"></a>Lighting models</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lightingModel: <span class="type">SCNMaterial</span>.<span class="type">LightingModel</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>材质的lightingModel属性决定了SceneKit使用的公式，该公式将其漫反射颜色和其他视觉属性与场景中的灯光和其他内容结合在一起，从而为渲染场景中的每个渲染像素生成最终颜色。</p>
+<h2 id="材质的光照模型类型"><a href="#材质的光照模型类型" class="headerlink" title="材质的光照模型类型"></a>材质的光照模型类型</h2><p><img src="/2018/12/10/SCNMaterial/ae0a5ad4-c04c-4eac-8491-8a8ec311407a.png" alt="img"></p>
+<ul>
+<li>constant：Uniform shading that incorporates ambient lighting only.</li>
+<li>均衡（扁平化）的阴影，在渲染时只计算（包含）ambient信息</li>
+<li>lambert：Shading that incorporates ambient and diffuse properties only.</li>
+<li>在渲染时只计算（包含）ambient信息和diffuse信息</li>
+<li>blinn：Shading that incorporates ambient, diffuse, and specular properties, where specular highlights are calculated using the Blinn-Phong formula.</li>
+<li>在渲染时只计算（包含）ambient信息、diffuse信息、specular信息，而且specular高光区是用Blinn-Phong法则计算的</li>
+<li>phong：Shading that incorporates ambient, diffuse, and specular properties, where specular highlights are calculated using the Phong formula.</li>
+<li>在渲染时只计算（包含）ambient信息、diffuse信息、specular信息，而且specular高光区是用Phong法则计算的</li>
+<li>physicallyBases：Shading based on a realistic abstraction of physical lights and materials.</li>
+<li>基于物理光和材料的现实抽象的阴影，包含了真实情况下,物理光源和材质对光的漫反射和吸收</li>
+</ul>
+<hr>
+<h1 id="物理纹理的可视化属性"><a href="#物理纹理的可视化属性" class="headerlink" title="物理纹理的可视化属性"></a>物理纹理的可视化属性</h1><h2 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p> Visual Properties for Physically Based Shading</p>
+</blockquote>
+<p>总共包含三个属性：</p>
+<ul>
+<li>diffuse：An object that manages the material’s diffuse response to lighting.</li>
+<li>用于控制材料对光线漫反射的反映（纯物理状态下的属性或直接物理属性）</li>
+<li>metalness：An object that provides color values to determine how metallic the material’s surface appears.</li>
+<li>根据颜色值来决定材料表面金属化（反光）程度</li>
+<li>roughness：An object that provides color values to determine the apparent smoothness of the surface.</li>
+<li>根据颜色值来决定材料表面光洁（凹凸）程度</li>
+</ul>
+<h2 id="diffuse（漫反射）"><a href="#diffuse（漫反射）" class="headerlink" title="diffuse（漫反射）"></a>diffuse（漫反射）</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> diffuse: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/10/SCNMaterial/60d7b841-ae16-40ce-a2ab-79ab36b438b7.png" alt="img"></p>
+<p>漫反射阴影描述的是从材料表面每个点均匀反射到各个方向的光的数量和颜色。像素的漫反射颜色与视点无关，因此它可以被看作是一种材料的“基色”或纹理。</p>
+<h2 id="metalness（金属性-反光-贴图）"><a href="#metalness（金属性-反光-贴图）" class="headerlink" title="metalness（金属性(反光)贴图）"></a>metalness（金属性(反光)贴图）</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> metalness: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>此属性仅度量颜色值的总强度;纹理内容最好用灰度来定义。</p>
+<p>这种性质通常近似于物理表面的某些方面，如折射率、产生锐反射的倾向、以及在掠掠角产生菲涅尔反射的倾向，这些因素共同产生了整体的金属或非金属(也称为介质)外观。较低的数值(较深的颜色)会使材料看起来更像介质表面。较高的数值(较亮的颜色)会使表面看起来更金属。</p>
+<h2 id="roughness（光洁程度）"><a href="#roughness（光洁程度）" class="headerlink" title="roughness（光洁程度）"></a>roughness（光洁程度）</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> roughness: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>此属性仅度量颜色值的总强度;纹理内容最好用灰度来定义。</p>
+<p>这个特性近似于表面的微观细节——例如微小的碰撞和裂纹。通过将这些“微面”近似为单个术语，该特性有助于生成类似于真实物理中的能量守恒定律的照明计算，从而在哑光和闪亮表面之间产生更真实的变化。</p>
+<p>较低的数值(较深的颜色)会使材料呈现光泽，并带有清晰的高光。较高的值(较亮的颜色)会导致高光发散，而材料的漫反射颜色会变得更加反射。</p>
+<hr>
+<h1 id="特殊效果的可视化属性"><a href="#特殊效果的可视化属性" class="headerlink" title="特殊效果的可视化属性"></a>特殊效果的可视化属性</h1><h2 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>Visual Properties for Special Effects</p>
+</blockquote>
+<p>总共包含五个属性：</p>
+<ul>
+<li>var normal: SCNMaterialProperty</li>
+<li>An object that defines the nominal orientation of the surface at each point for use in lighting.</li>
+<li>var displacement: SCNMaterialProperty</li>
+<li>var emission: SCNMaterialProperty</li>
+<li>An object that defines the color emitted by each point on a surface.</li>
+<li>var selfIllumination: SCNMaterialProperty</li>
+<li>An object that provides color values representing the global illumination of the surface.</li>
+<li>var ambientOcclusion: SCNMaterialProperty</li>
+<li>An object that provides color values to be multiplied with the ambient light affecting the material.</li>
+</ul>
+<h2 id="normal"><a href="#normal" class="headerlink" title="normal"></a>normal</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> normal: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>要模拟光与材料的相互作用，就需要了解每一点表面的方向。通常，由几何对象提供的法向量提供此信息。然而，这限制了表面轮廓的细节级别，因为一个几何结构只能为每个顶点提供一个唯一的表面法向量(增加顶点数量来建模一个非常详细的表面需要很高的性能成本)。</p>
+<p>或者，您可以使用纹理图像作为法线映射，它描述纹理中每个像素的表面方向。当SceneKit使用图像时，它将每个图像的R、G和B分量视为曲面法向量的X、Y和Z分量。因为法线贴图纹理可以存储比几何图形更详细的表面信息，所以您可以使用材料的法线属性来模拟粗糙的表面，例如石头，或者在光滑的表面添加浮雕或雕刻设计。</p>
+<p>默认情况下，normal属性的contents对象是白色的。将normal属性的内容设置为任何纯色都会禁用normal映射，导致SceneKit仅使用几何图形提供的表面normal信息对材料进行阴影处理。将normal属性的内容设置为图像或其他纹理映射内容将启用normal映射，这也将自动将材质的isLitPerPixel属性设置为true。</p>
+<p>下图显示了在其他属性具有默认内容的材质上将normal属性的内容设置为纹理图像的效果。</p>
+<p><img src="/2018/12/10/SCNMaterial/9192ade0-d6ec-46b9-aa52-0988d3f02a88.png" alt="img"></p>
+<h2 id="displacement"><a href="#displacement" class="headerlink" title="displacement"></a>displacement</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> displacement: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="emission"><a href="#emission" class="headerlink" title="emission"></a>emission</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emission: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>您可以使用发射贴图(emissive map)纹理来模拟表面的部分，这些部分会发光。SceneKit并不将材料视为光源——相反，发射特性决定了独立于照明的材料的颜色。(为了创建一个发光的对象，你可能希望结合一个几何图形，发射地图和额外的SCNLight对象添加到场景。)</p>
+<p>默认情况下，emissive属性的contents对象是黑色的，这导致属性没有可见效果。将发射属性的内容设置为任何一种纯色，都会为材料添加一种不依赖于灯光的统一颜色。要创建选择性辉光效果，请将属性的内容设置为图像或其他纹理映射内容，其发光区域使用明亮的颜色，其他区域使用较暗的颜色。在发射贴图(emissive map)的深色部分(以及不透明度降低的部分)中，材质的其他视觉属性有助于它在场景照明下的外观。</p>
+<p>下图显示了一个材质(带有纹理作为漫反射(diffuse)属性)在提供一个发射地图(emissive map)图像之前和之后。</p>
+<p><img src="/2018/12/10/SCNMaterial/b3a74868-b2ba-4e74-92b0-dfd314c22aeb.png" alt="img"></p>
+<h2 id="selfIllumination"><a href="#selfIllumination" class="headerlink" title="selfIllumination"></a>selfIllumination</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> selfIllumination: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>自照明适用于所有材料，但对于那些使用基于物理的阴影的材料尤其有用(参见physicallyBased)。基于物理的材料最适合于基于环境的照明(请参阅SCNScene属性lightingEnvironment)，但是对于某些材料来说，让一个表面本身定义它的部分照明是有用的——例如，一个物体的位置从提供主要照明环境的“天空”中模糊了它。当您为这个属性指定内容时，它们覆盖了环境照明对漫反射阴影的贡献，但是环境照明仍然对高光效果有贡献。</p>
+<h2 id="ambientOcclusion"><a href="#ambientOcclusion" class="headerlink" title="ambientOcclusion"></a>ambientOcclusion</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ambientOcclusion: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>使用此属性可将环境遮挡纹理映射指定到表面。如果场景中没有环境光，则此属性无效。如果该属性不是nil, SceneKit将忽略ambient属性。</p>
+<p>当使用基于物理的阴影时(参见physicallyBased)，环境遮挡近似于掩盖全局光照的大规模表面细节。</p>
+<hr>
+<h1 id="基础纹理的可视化属性"><a href="#基础纹理的可视化属性" class="headerlink" title="基础纹理的可视化属性"></a>基础纹理的可视化属性</h1><h2 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>Visual Properties for Basic Shading</p>
+</blockquote>
+<p>总共包含九个属性：</p>
+<ul>
+<li>var diffuse: SCNMaterialProperty</li>
+<li>An object that manages the material’s diffuse response to lighting.</li>
+<li>var ambient: SCNMaterialProperty</li>
+<li>An object that manages the material’s response to ambient lighting.</li>
+<li>var specular: SCNMaterialProperty</li>
+<li>An object that manages the material’s specular response to lighting.</li>
+<li>var reflective: SCNMaterialProperty</li>
+<li>An object that defines the reflected color for each point on a surface.</li>
+<li>var multiply: SCNMaterialProperty</li>
+<li>An object that provides color values that are multiplied with pixels in a material after all other shading is complete.</li>
+<li>var transparent: SCNMaterialProperty</li>
+<li>An object that determines the opacity of each point in a material.</li>
+<li>var shininess: CGFloat</li>
+<li>The sharpness of specular highlights. Animatable.</li>
+<li>var fresnelExponent: CGFloat</li>
+<li>A factor affecting the material’s reflectivity. Animatable.</li>
+<li>var locksAmbientWithDiffuse: Bool</li>
+<li>A Boolean value that determines whether the material responds identically to both ambient and diffuse lighting. Animatable.</li>
+</ul>
+<h2 id="diffuse"><a href="#diffuse" class="headerlink" title="diffuse"></a>diffuse</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> diffuse: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/10/SCNMaterial/60d7b841-ae16-40ce-a2ab-79ab36b438b7.png" alt="img"></p>
+<p>漫反射阴影描述的是从材料表面每个点均匀反射到各个方向的光的数量和颜色。像素的漫反射颜色与视点无关，因此它可以被看作是一种材料的“基色”或纹理。</p>
+<h2 id="ambient"><a href="#ambient" class="headerlink" title="ambient"></a>ambient</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ambient: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>环境阴影(Ambient shading)描述材料反射的环境光的数量和颜色。在一个表面上的所有点上，环境阴影在所有方向上都是均匀的。如果一个场景不包含周围环境类型的灯光，这个属性对材质的外观没有影响。</p>
+<p>默认情况下，ambient属性的contents对象是深灰色的。更改ambient属性的内容可以为场景中没有被灯光直接照亮的区域指定不同的颜色或纹理。为了使材料对环境光和漫射光的响应一致，将其locksambientwith漫射属性设置为true。</p>
+<p>下图显示了在将环境属性的内容设置为纯色之前和之后的材质(带有纹理作为漫反射(diffuse)属性)。</p>
+<p><img src="/2018/12/10/SCNMaterial/d4124591-7d69-44c2-bbc2-061fda9565a5.png" alt="img"></p>
+<p>材质的lightingModel属性决定了SceneKit用于将其环境颜色和其他视觉属性与场景中的灯光和其他内容组合在一起的公式，从而为场景中的每个呈现像素生成最终颜色。有关详细信息，请参见照明模型。</p>
+<p>此材料属性不适用于基于物理的材料(请参见physicallyBased)。</p>
+<h2 id="specular"><a href="#specular" class="headerlink" title="specular"></a>specular</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> specular: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>高光材质(Specular shading)描述的是材料直接反射到观看者身上的光的数量和颜色，在表面形成一个明亮的高光，并模拟光滑或有光泽的外观。您可以使用材质的光泽属性来调整高光的锐度。</p>
+<p>默认情况下，高光(specular)属性的内容对象是黑色的，这将导致材质看起来暗淡无光。改变高光(specular)属性的内容到一个更亮的颜色导致高光(specular)高亮出现在那个颜色，使表面看起来闪亮。当你对高光(specular)属性应用纹理时，纹理图像就变成了高光贴图(specular map)——图像中每个像素的亮度决定了材料表面每个点在被光照时产生高光的趋势。</p>
+<p>下图显示了材质(带有纹理作为漫反射(diffuse)属性)在提供高光贴图图像之前和之后的效果。请注意，明亮的高光只出现在高光贴图(specular map)图像为白色的部分表面。</p>
+<p><img src="/2018/12/10/SCNMaterial/b209fa42-9bf8-4a77-90e1-e7c5f79f4224.png" alt="img"></p>
+<p>此材料属性不适用于基于物理的材料(请参见 physicallyBased)。</p>
+<h2 id="reflective"><a href="#reflective" class="headerlink" title="reflective"></a>reflective</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reflective: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>您可以通过使表面反射其环境来模拟镜像或镀铬处理。SceneKit不呈现场景中对象的实时反射，但它可以使用环境映射纹理来模拟静态或动画图像的反射。当渲染表面上的每个像素时，SceneKit将光线从该点跟踪到环境映射中的一个像素，就像表面反射了该图像一样。</p>
+<p>默认情况下，反射(reflective)属性的contents对象是白色的，这导致属性没有可见效果。将反射(reflective)属性的内容设置为任何纯色都会为材质添加均匀的阴影。要创建反射(reflective)效果，请将属性的内容设置为图像或其他纹理映射内容。</p>
+<p>要使用环境映射产生镜像效果，纹理图像应该采用以下两种形式之一:<br>一个球面图，一个正方形的图像，其内容描述了一个被镜像球面反射的环境。<br>一个立方体映射，由六个正方形图像组成的阵列，它们共同构成一个包围场景的假想立方体，其内部表面被材质反射。您可以通过将反射属性的contents对象设置为一个包含6张图像的NSArray实例来创建一个多维数据集映射，每个图像按照以下顺序对应场景世界坐标空间中的一个方向:+X、-X、+Y、-Y、+Z、-Z(或右、左、上、下、近、远)。</p>
+<p>下图显示了在为反射(reflective)属性提供立方体映射之前和之后的材质(带有纹理作为其普通(normal)属性)。</p>
+<p><img src="/2018/12/10/SCNMaterial/194a1b48-1c03-4a10-9c6a-3c6c8665448a.png" alt="img"></p>
+<p>此材料属性不适用于基于物理的材料(请参见physicallyBased)。相反，这些材料根据它们的金属度和粗糙度特性反射基于环境的照明(参见SCNScene lightingEnvironment属性)。</p>
+<h2 id="multiply"><a href="#multiply" class="headerlink" title="multiply"></a>multiply</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> multiply: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>将材质的其他视觉属性与灯光和场景的其他信息相结合后，scene kit将每个渲染像素的颜色乘以该属性提供的颜色。您可以使用此属性使表面变暗或着色，而不受光照和其他属性的影响，或者通过阴影映射将预先计算的光照添加到场景中。</p>
+<p>默认情况下，multiply属性的contents对象是白色的，导致属性没有可见效果。</p>
+<p>下图显示了在将multiply属性的内容设置为纯色之前和之后的材质(带有纹理，用于漫反射(diffuse)和发射(emission)属性)。请注意，正片叠底的颜色甚至可以调节由辐射贴图添加的明亮区域。</p>
+<p><img src="/2018/12/10/SCNMaterial/7da498a6-88ec-4a2e-a175-ea4952a05d28.png" alt="img"></p>
+<h2 id="transparent"><a href="#transparent" class="headerlink" title="transparent"></a>transparent</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> transparent: <span class="type">SCNMaterialProperty</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>使用此属性可选择性地使材料的某些部分呈现透明。可以使用透明(transparency)属性统一调整材质的不透明度，也可以使用节点的不透明度属性对附加到节点上的所有内容进行调整。</p>
+<p>默认情况下，透明属性的contents对象是完全不透明的黑色，这导致属性没有可见效果。将透明属性的内容设置为任何纯色，将基于该颜色的不透明度值均匀地淡入材质的不透明度。</p>
+<p>要使材质的某些部分看起来是透明的，请将属性的内容设置为图像或其他纹理映射内容，其alpha通道定义了完全或部分不透明的区域。</p>
+<p>下图显示了半透明材质在为其透明属性提供纹理图像之前和之后。(为了使透明效果更加明显，透明材质后面显示了一个蓝色球体。)</p>
+<p><img src="/2018/12/10/SCNMaterial/1fb27661-a358-46dc-8aaa-96acbe481fc6.png" alt="img"></p>
+<p>transparencyMode控制SceneKit如何从透明属性的内容中解释颜色信息。</p>
+<h2 id="shininess"><a href="#shininess" class="headerlink" title="shininess"></a>shininess</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> shininess: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>材料的光泽(shininess)与其镜面(specular)特性和场景中的灯光(lighting)相互作用，从而在表面上产生明亮的高光。一个较高的值会产生更清晰的高光，使表面看起来更光滑和有光泽。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<h2 id="fresnelExponent"><a href="#fresnelExponent" class="headerlink" title="fresnelExponent"></a>fresnelExponent</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fresnelExponent: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>材料的菲涅尔指数(Fresnel exponent)与其反射(reflective)特性相互作用，根据其相对于观察者的角度确定表面反射的强度。较高的菲涅尔指数增加以浅角度观察材料时的反射率。</p>
+<p>A higher Fresnel exponent increases the visibility of reflections when the material is viewed from a shallow angle.</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<h2 id="locksAmbientWithDiffuse"><a href="#locksAmbientWithDiffuse" class="headerlink" title="locksAmbientWithDiffuse"></a>locksAmbientWithDiffuse</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> locksAmbientWithDiffuse: <span class="type">Bool</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>当建模真实世界的照明，在可见的环境光(ambient)和漫射光(diffuse)，一个表面通常被认为有一个单一的“基础”颜色或纹理。</p>
+<p>当该属性值为false时，SceneKit没有这个限制:您可以使用材质的漫反射属性来提供在直接照明下可见的颜色或纹理，而使用它的ambient属性来为未直接照明的区域提供不同的颜色或纹理。</p>
+<p>当这个属性的值为true时，或者当使用基于物理的阴影模式时，SceneKit将漫反射属性用于环境照明，忽略环境(ambient)属性，并确保材料对环境光和漫反射光的响应一致。</p>
+<p>对于所有平台上的新应用程序，此属性的默认值为true。(在OS X v10.9和更早的版本中，默认值为false。)<br>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<p>动画化此属性会在呈现每个状态的结果之间逐渐消失。</p>
+<hr>
+<h1 id="管理不透明度和混合"><a href="#管理不透明度和混合" class="headerlink" title="管理不透明度和混合"></a>管理不透明度和混合</h1><h2 id="transparency"><a href="#transparency" class="headerlink" title="transparency"></a>transparency</h2><h3 id="transparency-1"><a href="#transparency-1" class="headerlink" title="transparency"></a>transparency</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> transparency: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>SceneKit通过将材质透明属性的颜色乘以该属性的值来确定表面中每个呈现像素的总不透明度。然后，材质的透明模式属性决定了材质的像素如何融入场景。</p>
+<p>还可以使用节点的不透明度属性统一调整附加到节点的所有内容的不透明度。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<h3 id="transparencyMode"><a href="#transparencyMode" class="headerlink" title="transparencyMode"></a>transparencyMode</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> transparencyMode: <span class="type">SCNTransparencyMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>默认的透明模式是SCNTransparencyMode.aOne。有关可用值及其效果，请参见scntransparent mode。</p>
+<h3 id="SCNTransparencyMode"><a href="#SCNTransparencyMode" class="headerlink" title="SCNTransparencyMode"></a>SCNTransparencyMode</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNTransparencyMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">aOne</span></span></span><br><span class="line"><span class="class">//<span class="title">SceneKit</span> <span class="title">derives</span> <span class="title">transparency</span> <span class="title">information</span> <span class="title">from</span> <span class="title">the</span> <span class="title">alpha</span> <span class="title">channel</span> <span class="title">of</span> <span class="title">colors</span>. <span class="title">The</span> <span class="title">value</span> 1.0 <span class="title">is</span> <span class="title">opaque</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">rgbZero</span></span></span><br><span class="line"><span class="class">//<span class="title">SceneKit</span> <span class="title">derives</span> <span class="title">transparency</span> <span class="title">information</span> <span class="title">from</span> <span class="title">the</span> <span class="title">luminance</span> <span class="title">of</span> <span class="title">colors</span>. <span class="title">The</span> <span class="title">value</span> 0.0 <span class="title">is</span> <span class="title">opaque</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="blending"><a href="#blending" class="headerlink" title="blending"></a>blending</h2><h3 id="blendMode"><a href="#blendMode" class="headerlink" title="blendMode"></a>blendMode</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> blendMode: <span class="type">SCNBlendMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>使用SCNBlendMode的默认混合模式。alpha，材质根据alpha(不透明度)值进行混合——alpha值高的像素比alpha值低的像素更不透明。更改此属性以创建特殊效果。</p>
+<p>例如，SCNBlendMode.add模式可以使对象看起来发光。</p>
+<h3 id="SCNBlendMode"><a href="#SCNBlendMode" class="headerlink" title="SCNBlendMode"></a>SCNBlendMode</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNBlendMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">alpha</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">multiplying</span> <span class="title">source</span> <span class="title">and</span> <span class="title">destination</span> <span class="title">color</span> <span class="title">values</span> <span class="title">by</span> <span class="title">their</span> <span class="title">corresponding</span> <span class="title">alpha</span> <span class="title">values</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">add</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">adding</span> <span class="title">the</span> <span class="title">source</span> <span class="title">color</span> <span class="title">to</span> <span class="title">the</span> <span class="title">destination</span> <span class="title">color</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">subtract</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">subtracting</span> <span class="title">the</span> <span class="title">source</span> <span class="title">color</span> <span class="title">from</span> <span class="title">the</span> <span class="title">destination</span> <span class="title">color</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">multiply</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">multiplying</span> <span class="title">the</span> <span class="title">source</span> <span class="title">color</span> <span class="title">with</span> <span class="title">the</span> <span class="title">background</span> <span class="title">color</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">screen</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">multiplying</span> <span class="title">the</span> <span class="title">inverse</span> <span class="title">of</span> <span class="title">the</span> <span class="title">source</span> <span class="title">color</span> <span class="title">with</span> <span class="title">the</span> <span class="title">inverse</span> <span class="title">of</span> <span class="title">the</span> <span class="title">destination</span> <span class="title">color</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">replace</span></span></span><br><span class="line"><span class="class">//<span class="title">Blend</span> <span class="title">by</span> <span class="title">replacing</span> <span class="title">the</span> <span class="title">destination</span> <span class="title">color</span> <span class="title">with</span> <span class="title">the</span> <span class="title">source</span> <span class="title">color</span>, <span class="title">ignoring</span> <span class="title">alpha</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="自定义外观呈现"><a href="#自定义外观呈现" class="headerlink" title="自定义外观呈现"></a>自定义外观呈现</h1><h2 id="var-isLitPerPixel-Bool"><a href="#var-isLitPerPixel-Bool" class="headerlink" title="var isLitPerPixel: Bool"></a>var isLitPerPixel: Bool</h2><p>当该属性的值为true(默认值)时，SceneKit为每个呈现的像素独立执行光照计算。这种方法提供了更好的呈现质量，但是会对呈现性能产生负面影响。</p>
+<p>如果将该属性的值更改为false, SceneKit将为几何图形中的每个顶点执行光照计算，并允许GPU在顶点之间的像素之间插入光照结果。根据几何图形表面的形状和顶点数量以及被渲染的材质属性，这种方法可以在不显著影响视觉质量的情况下提高渲染性能。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<p>动画化此属性会在呈现每个状态的结果之间逐渐消失。</p>
+<h2 id="var-isDoubleSided-Bool"><a href="#var-isDoubleSided-Bool" class="headerlink" title="var isDoubleSided: Bool"></a>var isDoubleSided: Bool</h2><p>当该属性的值为false(默认值)时，SceneKit从一侧使用材质呈现一个表面。几何图形中的顶点数据和法向量指定每个多边形的哪一侧被认为是它的正面，几何图形相对于摄像机的方向决定了当前哪些正面是可见的。</p>
+<p>如果将此属性的值更改为YES, SceneKit将同时呈现每个多边形的前表面和后表面。SceneKit假设面法线是正面法向量的负值。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<p>动画化此属性会在呈现每个状态的结果之间逐渐消失</p>
+<h2 id="var-cullMode-SCNCullMode"><a href="#var-cullMode-SCNCullMode" class="headerlink" title="var cullMode: SCNCullMode"></a>var cullMode: SCNCullMode</h2><p>几何图形中的顶点数据和法向量指定每个多边形的哪一侧被认为是它的正面，几何图形相对于摄像机的方向决定了当前哪些正面是可见的。通常，后表面只出现在封闭几何图形的内部，被前表面所遮挡，因此渲染这些表面需要性能成本，但没有可见效果。</p>
+<p>该属性的默认值是back，指定SceneKit应该选择或不呈现背面。您可以更改此属性的值，以使SceneKit只呈现材料的背面。有关可用值，请参见SCNCullMode。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<p>动画化此属性会在呈现每个状态的结果之间逐渐消失</p>
+<h2 id="SCNCullMode"><a href="#SCNCullMode" class="headerlink" title="SCNCullMode"></a>SCNCullMode</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNCullMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">back</span></span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">front</span></span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
+<p>几何图形中的顶点数据和法向量指定每个多边形的哪一侧被认为是它的正面，几何图形相对于摄像机的方向决定了当前哪些正面是可见的。通常，后表面只出现在封闭几何图形的内部，被前表面所遮挡，因此渲染这些表面需要性能成本，但没有可见效果。</p>
+<hr>
+<h1 id="管理渲染目标"><a href="#管理渲染目标" class="headerlink" title="管理渲染目标"></a>管理渲染目标</h1><h2 id="var-writesToDepthBuffer-Bool"><a href="#var-writesToDepthBuffer-Bool" class="headerlink" title="var writesToDepthBuffer: Bool"></a>var writesToDepthBuffer: Bool</h2><p>SceneKit的呈现过程使用深度缓冲区来确定相对于查看器呈现的表面的顺序。该属性的默认值为true，指定SceneKit为每个呈现的像素保存深度信息，以便稍后的呈现传递使用。</p>
+<p>通常，在呈现半透明对象时禁用对深度缓冲区的写入，因为呈现过程的后续阶段可能需要关于其背后不透明对象的深度信息。</p>
+<h2 id="var-readsFromDepthBuffer-Bool"><a href="#var-readsFromDepthBuffer-Bool" class="headerlink" title="var readsFromDepthBuffer: Bool"></a>var readsFromDepthBuffer: Bool</h2><p>SceneKit的呈现过程使用深度缓冲区来确定相对于查看器呈现的表面的顺序。该属性的默认值为true，指定SceneKit在渲染材质时将每个渲染像素的深度与其深度缓冲区中的相应值进行比较。如果像素的深度大于深度缓冲区中相应的点，SceneKit不会呈现像素。</p>
+<p>通常，在呈现无论场景中已经呈现的内容如何都应该可见的对象时(例如，游戏中的抬头显示)，您将禁用从深度缓冲区读取。在这种情况下，还应该为节点的renderingOrder属性设置一个高值，该属性包含要始终可见的任何内容。</p>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/SceneKit/" rel="tag"># SceneKit</a>
+          
+            <a href="/tags/SCNMaterial/" rel="tag"># SCNMaterial</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/形式逻辑-第五版-华东师范大学出版社/" rel="next" title="形式逻辑-第五版-华东师范大学出版社（1～4章）">
+                <i class="fa fa-chevron-left"></i> 形式逻辑-第五版-华东师范大学出版社（1～4章）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/11/SCNMaterialProperty/" rel="prev" title="SCNMaterialProperty">
+                SCNMaterialProperty <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Leonardo Lu</p>
+              <p class="site-description motion-element" itemprop="description">A ＝ { x | x∉A }</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCNMaterial"><span class="nav-number">2.</span> <span class="nav-text">SCNMaterial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建"><span class="nav-number">2.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他属性"><span class="nav-number">2.2.</span> <span class="nav-text">其他属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lighting-models"><span class="nav-number">3.</span> <span class="nav-text">Lighting models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#材质的光照模型类型"><span class="nav-number">3.2.</span> <span class="nav-text">材质的光照模型类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理纹理的可视化属性"><span class="nav-number">4.</span> <span class="nav-text">物理纹理的可视化属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-1"><span class="nav-number">4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diffuse（漫反射）"><span class="nav-number">4.2.</span> <span class="nav-text">diffuse（漫反射）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metalness（金属性-反光-贴图）"><span class="nav-number">4.3.</span> <span class="nav-text">metalness（金属性(反光)贴图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roughness（光洁程度）"><span class="nav-number">4.4.</span> <span class="nav-text">roughness（光洁程度）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特殊效果的可视化属性"><span class="nav-number">5.</span> <span class="nav-text">特殊效果的可视化属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-2"><span class="nav-number">5.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#normal"><span class="nav-number">5.2.</span> <span class="nav-text">normal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#displacement"><span class="nav-number">5.3.</span> <span class="nav-text">displacement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#emission"><span class="nav-number">5.4.</span> <span class="nav-text">emission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selfIllumination"><span class="nav-number">5.5.</span> <span class="nav-text">selfIllumination</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ambientOcclusion"><span class="nav-number">5.6.</span> <span class="nav-text">ambientOcclusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础纹理的可视化属性"><span class="nav-number">6.</span> <span class="nav-text">基础纹理的可视化属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述-3"><span class="nav-number">6.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diffuse"><span class="nav-number">6.2.</span> <span class="nav-text">diffuse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ambient"><span class="nav-number">6.3.</span> <span class="nav-text">ambient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#specular"><span class="nav-number">6.4.</span> <span class="nav-text">specular</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reflective"><span class="nav-number">6.5.</span> <span class="nav-text">reflective</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiply"><span class="nav-number">6.6.</span> <span class="nav-text">multiply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transparent"><span class="nav-number">6.7.</span> <span class="nav-text">transparent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shininess"><span class="nav-number">6.8.</span> <span class="nav-text">shininess</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fresnelExponent"><span class="nav-number">6.9.</span> <span class="nav-text">fresnelExponent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#locksAmbientWithDiffuse"><span class="nav-number">6.10.</span> <span class="nav-text">locksAmbientWithDiffuse</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理不透明度和混合"><span class="nav-number">7.</span> <span class="nav-text">管理不透明度和混合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#transparency"><span class="nav-number">7.1.</span> <span class="nav-text">transparency</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transparency-1"><span class="nav-number">7.1.1.</span> <span class="nav-text">transparency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transparencyMode"><span class="nav-number">7.1.2.</span> <span class="nav-text">transparencyMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCNTransparencyMode"><span class="nav-number">7.1.3.</span> <span class="nav-text">SCNTransparencyMode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blending"><span class="nav-number">7.2.</span> <span class="nav-text">blending</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#blendMode"><span class="nav-number">7.2.1.</span> <span class="nav-text">blendMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCNBlendMode"><span class="nav-number">7.2.2.</span> <span class="nav-text">SCNBlendMode</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义外观呈现"><span class="nav-number">8.</span> <span class="nav-text">自定义外观呈现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#var-isLitPerPixel-Bool"><span class="nav-number">8.1.</span> <span class="nav-text">var isLitPerPixel: Bool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#var-isDoubleSided-Bool"><span class="nav-number">8.2.</span> <span class="nav-text">var isDoubleSided: Bool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#var-cullMode-SCNCullMode"><span class="nav-number">8.3.</span> <span class="nav-text">var cullMode: SCNCullMode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SCNCullMode"><span class="nav-number">8.4.</span> <span class="nav-text">SCNCullMode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理渲染目标"><span class="nav-number">9.</span> <span class="nav-text">管理渲染目标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#var-writesToDepthBuffer-Bool"><span class="nav-number">9.1.</span> <span class="nav-text">var writesToDepthBuffer: Bool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#var-readsFromDepthBuffer-Bool"><span class="nav-number">9.2.</span> <span class="nav-text">var readsFromDepthBuffer: Bool</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leonardo Lu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '8NICkqCKUbkbwAFPj1s8qMLf-gzGzoHsz',
+    appKey: 'uCujOdh1qnLqmVXjF1JGwhKm',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('Copy');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":150},"mobile":{"show":false,"scale":0.2}});</script></body>
+</html>
