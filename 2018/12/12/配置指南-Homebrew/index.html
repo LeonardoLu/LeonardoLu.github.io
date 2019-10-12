@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Leonardo Lu">
 <meta property="og:description" content="Homebrew包管理工具可以让你安装和更新程序变得更方便，目前在 OS X 系统中最受欢迎的包管理工具是 Homebrew.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-07T11:40:34.382Z">
+<meta property="og:updated_time" content="2019-10-12T11:33:12.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置指南-Homebrew">
 <meta name="twitter:description" content="Homebrew包管理工具可以让你安装和更新程序变得更方便，目前在 OS X 系统中最受欢迎的包管理工具是 Homebrew.">
@@ -429,7 +429,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-10-07 19:40:34" itemprop="dateModified" datetime="2019-10-07T19:40:34+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-12 19:33:12" itemprop="dateModified" datetime="2019-10-12T19:33:12+08:00">2019-10-12</time>
               
             
           </span>
@@ -530,7 +530,7 @@
 <h1 id="Homebrew-1"><a href="#Homebrew-1" class="headerlink" title="Homebrew"></a>Homebrew</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>在安装 Homebrew 之前，需要将 Xcode Command Line Tools 安装完成，这样你就可以使用基于 Xcode Command Line Tools 编译的 Homebrew。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
 <p>在 terminal 中复制以下命令（不包括 $），跟随指引，将完成 Hombrew 安装。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></span><br></pre></td></tr></table></figure>
 <p>紧接着，我们需要做一件事让通过 Hombrew 安装的程序的启动链接 (在 /usr/local/bin 中）可以直接运行，无需将完整路径写出。通过以下命令将 /usr/local/bin 添加至 $PATH 环境变量中:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">'export PATH="/usr/local/bin:$PATH"'</span> &gt;&gt; ~/.bash_profile</span><br></pre></td></tr></table></figure>
 <p><strong>Cmd+T</strong> 打开一个新的 terminal 标签页，运行以下命令，确保 brew 运行正常。</p>
