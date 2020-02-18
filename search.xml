@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Xcode 注释文档方法]]></title>
     <url>%2F2020%2F02%2F18%2FhowToMarkupInXcode%2F</url>
-    <content type="text"><![CDATA[Xcode 注释方法今天，我知道我写了什么代码， 明天，我知道为什么写这代码， 后天，我知道这是我写的代码， 一周后，我知道我看不懂代码， 论代码注释的重要性。 普通的注释 单行注释 插入 // 会使后续内容成为注释。 12var str = "这是代码"// 这是注释 多行注释 输入 /* 和 */ 在其间输入内容，那么整体就会成为注释。 12345var str = "这是代码"/* 这是注释的第一行 这是注释的第二行*/ Xcode 可以同时按下 command 和 / （⌘+/）将光标停留或选中的行注释，注释的结果为：在每一行的最开始添加 // 。 MARK、TODO、FIXME这三种都是对代码结构进行注释，会在文件代码结构视图（⌃+6）中显示出来。 MARK: 代码结构标记。 1234// MARK: - Properties// MARK: - Initialization// MARK: - IBAction Method// MARK: - XXXDelegate TODO： 待完成标记。 12// TODO: - 待完成的功能// TODO: - Need to finish FIXME: 检查标记。 12// FIXME: - 这里可能发生崩溃// FIXME: - There is a waring 注释后效果如图： 文档注释文档注释用于输出代码文档和阅读方便，规范的文档可以在 Quick Help 中看到或者 option + 左击 （⌥ + 左击）快速查看相关说明。 单行文档注释的快捷键：command + option + / （⌘+⌃+/） 文档注释的对象： 自定义类型、变量、方法等，重点就是对方法进行说明。 单行注释 12/// 这是注释var code:String = "这是代码" 注意，Xcode 不识别行尾的单行文档注释 多行注释 123456789101112/// 测试////// # 支持markdown/// # 一级标题/// ## 二级标题也可以的/// 注释参考2/// 隔一行表示换行d////// 三个”***"代表一条分割线/// ***/// ## 使用示例/// /// let result = testComment2(pram: “参数1”, param2: true))/// 1234567891011////// ****/// - important:这个很重要/// - returns: 有返回值/// - parameter pram: The cubes available for allocation/// - parameter param2: The people that require cubesfunc exampleFunc(firstPram:String, secondParam:Bool) -&gt; Bool &#123; print(&quot;markdown支持&quot;) return true&#125; 另一种多行注释的方法 12345678910111213/** 测试 # 支持markdown # 一级标题 ## 二级标题也可以的 注释参考 隔一行表示换行 三个”***"代表一条分割线 *** ## 使用示例 let result = exampleFunc(firstPram: “1”, secondParam: true) 123456789101112 **** - important:这个很重要 - returns: 有返回值 - parameter firstPram: String - parameter secondParam: Bool */func exampleFunc(firstPram:String, secondParam:Bool) -&gt; Bool &#123; print(&quot;markdown支持&quot;) return true&#125; 另一种风格 123456789/// 通过姓名、年龄、性别创建一个视图并返回////// - Parameters:/// - firstParam: String/// - secondParam: Double/// - Returns: Intfunc example(firstParam:String,secondParam:Double) -&gt; Int &#123; return 0&#125;]]></content>
+    <content type="text"><![CDATA[Xcode 注释文档方法今天，我知道我写了什么代码， 明天，我知道为什么写这代码， 后天，我知道这是我写的代码， 一周后，我知道我看不懂代码， 论代码注释的重要性。 普通的注释 单行注释 插入 // 会使后续内容成为注释。 12var str = "这是代码"// 这是注释 多行注释 输入 /* 和 */ 在其间输入内容，那么整体就会成为注释。 12345var str = "这是代码"/* 这是注释的第一行 这是注释的第二行*/ Xcode 可以同时按下 command 和 / （⌘+/）将光标停留或选中的行注释，注释的结果为：在每一行的最开始添加 // 。 MARK、TODO、FIXME这三种都是对代码结构进行注释，会在文件代码结构视图（⌃+6）中显示出来。 MARK: 代码结构标记。 1234// MARK: - Properties// MARK: - Initialization// MARK: - IBAction Method// MARK: - XXXDelegate TODO： 待完成标记。 12// TODO: - 待完成的功能// TODO: - Need to finish FIXME: 检查标记。 12// FIXME: - 这里可能发生崩溃// FIXME: - There is a waring 注释后效果如图： 文档注释文档注释用于输出代码文档和阅读方便，规范的文档可以在 Quick Help 中看到或者 option + 左击 （⌥ + 左击）快速查看相关说明。 单行文档注释的快捷键：command + option + / （⌘+⌃+/） 文档注释的对象： 自定义类型、变量、方法等，重点就是对方法进行说明。 单行注释 12/// 这是注释var code:String = "这是代码" 注意，Xcode 不识别行尾的单行文档注释 多行注释 123456789101112/// 测试////// # 支持markdown/// # 一级标题/// ## 二级标题也可以的/// 注释参考2/// 隔一行表示换行d////// 三个”***"代表一条分割线/// ***/// ## 使用示例/// /// let result = testComment2(pram: “参数1”, param2: true))/// 1234567891011////// ****/// - important:这个很重要/// - returns: 有返回值/// - parameter pram: The cubes available for allocation/// - parameter param2: The people that require cubesfunc exampleFunc(firstPram:String, secondParam:Bool) -&gt; Bool &#123; print(&quot;markdown支持&quot;) return true&#125; 另一种多行注释的方法 12345678910111213/** 测试 # 支持markdown # 一级标题 ## 二级标题也可以的 注释参考 隔一行表示换行 三个”***"代表一条分割线 *** ## 使用示例 let result = exampleFunc(firstPram: “1”, secondParam: true) 123456789101112 **** - important:这个很重要 - returns: 有返回值 - parameter firstPram: String - parameter secondParam: Bool */func exampleFunc(firstPram:String, secondParam:Bool) -&gt; Bool &#123; print(&quot;markdown支持&quot;) return true&#125; 另一种风格 123456789/// 通过姓名、年龄、性别创建一个视图并返回////// - Parameters:/// - firstParam: String/// - secondParam: Double/// - Returns: Intfunc example(firstParam:String,secondParam:Double) -&gt; Int &#123; return 0&#125;]]></content>
       <categories>
         <category>Swift</category>
         <category>Xcode</category>
@@ -22,8 +22,8 @@
         <category>线性代数</category>
       </categories>
       <tags>
-        <tag>Swift</tag>
         <tag>线性代数</tag>
+        <tag>Swift</tag>
         <tag>SceneKit</tag>
       </tags>
   </entry>
@@ -91,9 +91,9 @@
         <category>Swift</category>
       </categories>
       <tags>
+        <tag>Swift</tag>
         <tag>数据结构</tag>
         <tag>Data Structures</tag>
-        <tag>Swift</tag>
       </tags>
   </entry>
   <entry>
