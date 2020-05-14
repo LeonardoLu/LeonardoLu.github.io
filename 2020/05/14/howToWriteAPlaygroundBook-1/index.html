@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/24 更新于：2020/02/24 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta name="keywords" content="Swift,PlaygroundBook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何书写一份 PlaygroundBook (1)">
+<meta property="og:url" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/index.html">
+<meta property="og:site_name" content="Leonardo Lu">
+<meta property="og:description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/24 更新于：2020/02/24 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224191753759.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224193022705.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195104611.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195027794.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195130839.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224194909561.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195640649.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200029982.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200056115.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200351527.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200607769.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224201417598.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224201356805.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225000307569.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225000957189.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001420066.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001553835.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001817675.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225002100391.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225002850984.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225012514919.png">
+<meta property="og:updated_time" content="2020-05-14T06:28:25.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何书写一份 PlaygroundBook (1)">
+<meta name="twitter:description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/24 更新于：2020/02/24 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224191753759.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何书写一份 PlaygroundBook (1) | Leonardo Lu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Leonardo Lu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-resume">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.qwq.name:8888/" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Resume</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/14/howToWriteAPlaygroundBook-1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leonardo Lu">
+      <meta itemprop="description" content="A ＝ { x | x∉A }">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leonardo Lu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何书写一份 PlaygroundBook (1)
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-05-14 14:24:42 / Modified: 14:28:25" itemprop="dateCreated datePublished" datetime="2020-05-14T14:24:42+08:00">2020-05-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/PlaygroundBook/" itemprop="url" rel="index"><span itemprop="name">PlaygroundBook</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2020/05/14/howToWriteAPlaygroundBook-1/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/05/14/howToWriteAPlaygroundBook-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2020/05/14/howToWriteAPlaygroundBook-1/" class="leancloud_visitors" data-flag-title="如何书写一份 PlaygroundBook (1)">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。</p>
+<p>本文：</p>
+<p>创建于： 2020/02/24</p>
+<p>更新于：2020/02/24</p>
+<p>当前版本：</p>
+<p>Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)</p>
+<p>Xcode: version 11.3.1 (11C504)</p>
+<p>Playgrounds (on Mac) : Version 3.2 (1137.33.1)</p>
+<p>Playgrounds (on iPad) : Version 3.2 (1084.31)</p>
+<p>注意：本文的绝大部份涉及例子和代码的内容笔者只会在 Playgrounds (on Mac) 上进行测试，笔者认为两个平台在 Playground Book 本身的技术上并无差异。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Playground-的相关设置"><a href="#Playground-的相关设置" class="headerlink" title="Playground 的相关设置"></a>Playground 的相关设置</h1><h2 id="创建-Playground-Book"><a href="#创建-Playground-Book" class="headerlink" title="创建 Playground Book"></a>创建 Playground Book</h2><blockquote>
+<p>在过去（如2017年）开发者仍只能使用创建好的空白 Playground Book 来进行创作。这样的形式给开发者带来了诸多不便（由于诸多Xcode 的先进功能无法使用）。</p>
+<p>而在后来，Apple 提交了一份用于创建 Playground Book 的工程项目，大大降低了开发和调试的难度和步骤。</p>
+</blockquote>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>同时使用运行 Xcode 的 Mac 和 iPad 创建 Playground Book。 下载 Swift Playgrounds 作者模板（<a href="https://developer.apple.com/download/more/?=Swift Playgrounds Author Template" target="_blank" rel="noopener">Swift Playgrounds Author Template</a>），并在Mac上的Xcode中将其打开。 然后，为其编写页面，并将其所有资源打包到与 iPad 共享的 <code>.playgroundbook</code> 文件中。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>该模板包含开始为 Swift Playgrounds 编写内容所需的所有初始文件和资源。 选择“Product”=&gt;“Build”，将这些资源编译成 <code>.playgroundbook</code> 文件，就可以与 iPad 共享该文件。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><h4 id="在-iPad-上运行"><a href="#在-iPad-上运行" class="headerlink" title="在 iPad 上运行"></a>在 iPad 上运行</h4><ol>
+<li>找到 Xcode 编译出的 <code>.playgroundbook</code> 文件（通常在固定的目录或者使用“show in finder”功能）。</li>
+<li>通过隔空投送（airdrop）将文件传输到 iPad 上。</li>
+<li>当传输完成时，iPad会自动使用“Swift Playgrounds”来打开该文件（如果iPad上有“Swift Playgrounds”）。</li>
+</ol>
+<h4 id="在-Mac-上运行"><a href="#在-Mac-上运行" class="headerlink" title="在 Mac 上运行"></a>在 Mac 上运行</h4><ol>
+<li>在 App Store 上下载“Playgrounds”。</li>
+<li>双击你的 <code>.playground</code> 文件。</li>
+</ol>
+<hr>
+<h2 id="Playground-Book-的文件结构"><a href="#Playground-Book-的文件结构" class="headerlink" title="Playground Book 的文件结构"></a>Playground Book 的文件结构</h2><blockquote>
+<p>Playground Book 是一种特殊的“包”，它以一定的结构和文件组织自身（通常为有特定后缀的文件夹和许多 <code>Manifest.plist</code> 文件）</p>
+<p>在本文中会大量出现表示诸如：<code>Swift Playground Book</code> 、<code>Swift Playground Page</code> 等概念的名词，笔者认为将这些名词翻译出来（如：书、书页、章节）会使阅读十分不顺且难以理解，但直接使用英文全称有些冗长且同样不好理解。因此，笔者作出以下约定：</p>
+<ul>
+<li>将 <code>Swift playground Book(s)</code> 表示为 “book”</li>
+<li>将 <code>Swift playground Chapter(s)</code> 表示为 “Chapter”</li>
+<li>将 <code>Swift playground Page(s)</code> 表示为 “page”</li>
+<li>将 <code>Swift module(s)</code> 或 <code>UserModule</code> 表示为 “module”</li>
+<li>将 <code>Introduction</code> 或 <code>引导页</code> 表示为 ”cutscene“ </li>
+</ul>
+<p>以上概念不仅表示相对应的 Swift Playground Book 结构，还会表示对应结构的根目录。</p>
+</blockquote>
+<h3 id="总体"><a href="#总体" class="headerlink" title="总体"></a>总体</h3><p>结合 Playground 中的 “book”、“chapter”、“page”、“Swift module”、“cutscene”来为需要呈现的内容作叙述和结构说明。比如，可以：</p>
+<ul>
+<li>使用“book”来“包裹”（打包）根目录级别的 Swift Playgrounds 内容。</li>
+<li>使用“chapter”来将“book”中的内容（“page”和“cutscene”）分组。</li>
+<li>使用“page”来写“book”的主要教学内容和探索性内容。</li>
+<li>使用“module”来实现实时视图，并提供学习者针对其编写代码的API。</li>
+<li>提供用户可编辑的模块，为学习者提供存储和重用代码的空间。</li>
+<li>在“page”之间穿插“cutscene”来介绍或者总结概念。</li>
+</ul>
+<p>Playground Book 的每一部分都必须包含 <code>Manifest.plist</code> 文件（属性列表）。这个列表包含了该部分的元数据（主要是描述数据属性（property）的信息，用来支持如指示存储位置、历史数据、资源查找、文件记录等功能。）以及对共享资源的引用。</p>
+<blockquote>
+<p>注意：</p>
+<p>可从Swift Playgrounds 3 和 Swift Playgrounds book 格式的版本 6 开始使用“module”。 对于以前的版本，将代码放置在“book”、“chapter”或“page”的 <code>Sources</code> 文件夹中。</p>
+</blockquote>
+<h3 id="“book”的属性列表"><a href="#“book”的属性列表" class="headerlink" title="“book”的属性列表"></a>“book”的属性列表</h3><p>在其 <code>Manifest.plist</code> 文件中写入有关 playground Book 的主要详细信息。 Swift Playgrounds 作者模板带有默认的文件，可以在其中更新有关书的特定详细信息，例如书名和封面图像的文件路径。</p>
+<blockquote>
+<p>一个“book”基本的文件结构至少应如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── example.playgroundbook</span><br><span class="line">&gt;  └── Contents</span><br><span class="line">&gt;      ├── Chapters</span><br><span class="line">&gt;      ├── Manifest.plist</span><br><span class="line">&gt;      └── UserModules</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>可以在这个文件中配置以下内容：</p>
+<ul>
+<li><code>Chapters</code><ul>
+<li>必须</li>
+<li>一个字符串数组，来对“book”中的每一个“chapter”进行排序。每一个字符串代表一个以 <code>.playgroundchapter</code> 结尾的目录的名称，这个目录应包含该“chapter”的内容和资源。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224191753759.png" alt="image-20200224191753759"></li>
+</ul>
+</li>
+<li><code>ContentIdentifier</code><ul>
+<li>必须</li>
+<li>一个字符串，作为能够从其他“book”之中识别作者的所有的标记。标识符必须是反向 DNS （reverse-DNS）的形式，并且应该使用自己或者组织的域（domain）。例如，如果拥有 example.com ，则可以将一本书的ContentIdentifier属性设置为 com.example.mybook 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224193022705.png" alt="image-20200224193022705"></li>
+</ul>
+</li>
+<li><code>ContentVersion</code><ul>
+<li>必须</li>
+<li>一个字符串，包含作为“book”的版本号的信息。该字符串只能是包含数字和英文句号（点）的序列，例如 <code>2.1.1</code> ，当更新“book”时，应该增加版本号。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195104611.png" alt="image-20200224195104611"></li>
+</ul>
+</li>
+<li><code>DeploymentTarget</code><ul>
+<li>必须</li>
+<li>一个字符串，包含运行“book”所需要的最低 iOS 的版本的信息（10.0或更高版本）。使用字符串 <code>ios</code> 作为版本号的前缀。例如，iOS 11.3 的版本字符串是 <code>ios11.3</code> 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195027794.png" alt="image-20200224195027794"></li>
+</ul>
+</li>
+<li><code>DevelopmentRegion</code><ul>
+<li>必须</li>
+<li>一个语言标识符（Language ID），表示“book”的默认语言和地区。有关更多信息，请参见 <code>Language ID</code> 和 <code>CFBundleDevelopmentRegion</code> 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195130839.png" alt="image-20200224195130839"></li>
+</ul>
+</li>
+<li><code>ImageReference</code><ul>
+<li>可选</li>
+<li>一个字符串，包含对 <code>.png</code> 文件的引用地址，该文件储存在“book”的名为 <code>Resources</code> 的文件夹中（该文件夹与 <code>Manifest.plist</code> 文件同级），被用作“book”的封面图标。图标的尺寸必须是长宽比为 4:3 的图像。推荐的图像尺寸为 400×300 像素。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224194909561.png" alt="image-20200224194909561"></li>
+</ul>
+</li>
+<li><code>Name</code><ul>
+<li>必须</li>
+<li>一个字符串，用于提供“book”的名称。该名称在 Swift Playgrounds 中作为“book”的名称呈现给用户。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224195640649.png" alt="image-20200224195640649"></li>
+</ul>
+</li>
+<li><code>Version</code><ul>
+<li>必须</li>
+<li>一个字符串，包含用于编写该“book”的 Swift Playground 书本格式 （<code>Swift Playground book format</code> ）。填写 <code>6.0</code>。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200029982.png" alt="image-20200224200029982">（来自空白模板）</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200056115.png" alt="image-20200224200056115">（来自学习编程1）</li>
+</ul>
+</li>
+<li><code>SwiftVersion</code><ul>
+<li>可选</li>
+<li>一个字符串，包含该“book”使用的 Swift 语言的版本。默认是 Swift 5.0 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200351527.png" alt="image-20200224200351527"></li>
+</ul>
+</li>
+<li><code>MinimumSwiftPlaygroundsVersion</code><ul>
+<li>可选</li>
+<li>一个字符串，包含该“book”使用的最低的 Swift Playgrounds （软件）的版本。默认是 1.2 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224200607769.png" alt="image-20200224200607769"></li>
+</ul>
+</li>
+<li><code>UserModuleMode</code><ul>
+<li>必须</li>
+<li>一个字符串，用于确定用户对“book”中用户可编辑模块（“module”）的控制程度。<ul>
+<li><code>Full</code><ul>
+<li>用户可编辑模块，用户可以根据需要添加和删除。</li>
+</ul>
+</li>
+<li><code>Limited</code><ul>
+<li>不可移除模块（笔者认为就是不可删除，但文档中使用的是“nonremovable”）</li>
+</ul>
+</li>
+<li><code>Disabled</code><ul>
+<li>没有可用的用户可编辑模块。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这个属性从 Swift Playgrounds 3 开始使用。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224201417598.png" alt="image-20200224201417598">（来自空白模板）</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200224201356805.png" alt="image-20200224201356805">（来自学习编程1）</li>
+</ul>
+</li>
+</ul>
+<h3 id="添加“chapter”"><a href="#添加“chapter”" class="headerlink" title="添加“chapter”"></a>添加“chapter”</h3><p>创建一个带有 <code>Manifest.plist</code> 文件的文件夹，该文件描述“chapter”的名称和该“chapter”顺序。</p>
+<p>使用“chapter”来按照主题来对“page”进行分组。</p>
+<h4 id="创建一个“chapter”"><a href="#创建一个“chapter”" class="headerlink" title="创建一个“chapter”"></a>创建一个“chapter”</h4><p>在“book”下名为 <code>Contents</code> 的文件里，应该有一个名为 <code>Chapters</code> 的文件夹，如果没有，请创建一个。</p>
+<blockquote>
+<p>文件结构至少应如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── blank.playgroundbook</span><br><span class="line">&gt;  └── Contents</span><br><span class="line">&gt;      └── Chapters</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>在 <code>Chapters</code> 这个文件夹内，创建一个新的文件夹，这个文件夹必须以 <code>.playgroundchapter</code> 作为后缀结尾。这个就是我们的新的“chapter”。</p>
+<p>在 Xcode 中，在这个新的“chapter”文件夹中，添加一个名为 <code>Manifest.plist</code> 的文件作为该“chapter”的属性列表。具体步骤如下：</p>
+<ol>
+<li>选择 （File &gt; New &gt; File…）。</li>
+<li>在弹出框中找到 <code>Property List</code> 选项（在 iOS &gt; Resource 中），然后下一步。</li>
+<li>将名字改为 Manifest ，创建文件。</li>
+</ol>
+<p>使用属性列表（<code>Manifest.plist</code>）列出“chapter”名称及其“内容”的顺序，该“内容”可以是“page”也可以是“cutscene”。</p>
+<blockquote>
+<p>创建完成后，文件结构应类似如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── example.playgroundbook</span><br><span class="line">&gt;  └── Contents</span><br><span class="line">&gt;      └── Chapters</span><br><span class="line">&gt;           └── Chapter1.playgroundchapter</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="“chapter”的属性列表"><a href="#“chapter”的属性列表" class="headerlink" title="“chapter”的属性列表"></a>“chapter”的属性列表</h4><ul>
+<li>name<ul>
+<li>必须</li>
+<li>一个字符串，用于提供“chapter”的名称。</li>
+</ul>
+</li>
+<li>Pages<ul>
+<li>必须</li>
+<li>一个字符串数组，来对“chapter”中的每一个“page”进行排序。每一个字符串代表一个以 <code>.playgroundpage</code> 结尾的目录（“page”）或者 <code>.cutscenepage</code> 结尾的目录（“cutscene”）的名称，这个目录应包含该“page”或者“cutscene”的内容和资源。</li>
+</ul>
+</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225000307569.png" alt="image-20200225000307569"></li>
+</ul>
+<h3 id="添加“page”"><a href="#添加“page”" class="headerlink" title="添加“page”"></a>添加“page”</h3><p>创建一个子文件夹，里面包含至少两个文件：一个属性列表、一个包含“page”内容的代码文件。</p>
+<p>“page”是“book”的主要内容。“page”包含了代码、散文（？笔者认为这个指的是每一个“page”的描述部分）、可能存在的实时视图，这些内容构成了打开一个“page”时 Swift Playground 呈现的界面。</p>
+<h4 id="创建一个“page”"><a href="#创建一个“page”" class="headerlink" title="创建一个“page”"></a>创建一个“page”</h4><p>在想要为其创建“page”的“chapter”的目录（以 <code>.playgroundchapter</code> 为后缀的文件夹）下，创建一个子文件夹，它的名字必须以 <code>.playgroundpage</code> 结尾。</p>
+<p>在 Xcode 中，在这个新的“page”文件夹中，添加一个名为 <code>Manifest.plist</code> 的文件作为该“page”的属性列表。具体步骤如下：</p>
+<ol>
+<li><p>选择 （File &gt; New &gt; File…）。</p>
+</li>
+<li><p>在弹出框中找到 <code>Property List</code> 选项（在 iOS &gt; Resource 中），然后下一步。</p>
+</li>
+<li><p>将名字改为 Manifest ，创建文件。</p>
+<p>使用属性列表（<code>Manifest.plist</code>）列出“page”的名称和配置元数据。</p>
+</li>
+</ol>
+<blockquote>
+<p>创建完成后，文件结构应类似如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── example.playgroundbook</span><br><span class="line">&gt;  └── Contents</span><br><span class="line">&gt;      └── Chapters</span><br><span class="line">&gt;             └── Chapter1.playgroundchapter</span><br><span class="line">&gt;                 ├── Manifest.plist</span><br><span class="line">&gt;                 └── Pages</span><br><span class="line">&gt;                     ├── Intro.cutscenepage</span><br><span class="line">&gt;                     └── Page1.playgroundpage</span><br><span class="line">&gt;                         └── Manifest.plist</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="添加代码和散文（描述）"><a href="#添加代码和散文（描述）" class="headerlink" title="添加代码和散文（描述）"></a>添加代码和散文（描述）</h4><p>为每一个“page”创建一个 <code>main.swift</code> 的代码文件（在<code>.playgroundpage</code> 目录下）。在这个文件中，编写用户看到的一个“page”的大部分内容（代码和散文）。在这个文件中编写的代码和散文会在 Swift Playgrounds 打开这个“page”后，显示在界面的左侧。</p>
+<blockquote>
+<p>注意：</p>
+<p>如果使用的 Swift Playground 书本格式 （<code>Swift Playground book format</code> ）在 6.0 以下下（即在“book”的属性列表（<code>Manifest.plist</code>）中的 <code>Version</code> 属性），应当使用 <code>Contents.swift</code> 而不是 <code>main.swift</code> 。</p>
+</blockquote>
+<p>在默认的情况下，在 <code>main.swift</code> 文件中写的所有内容都会被认为是普通的 Swift 代码，当用户点击“Run”按钮时，代码就会运行。“page”支持丰富的注释手段以便编写散文和添加功能。</p>
+<h4 id="添加一个始终存在的实时视图"><a href="#添加一个始终存在的实时视图" class="headerlink" title="添加一个始终存在的实时视图"></a>添加一个始终存在的实时视图</h4><p>要在“page”上显示运行代码的结果，需要添加一个始终存在的实时视图。为了使视图显示在界面上，必须在 <code>LiveView.swift</code> 中设置当前“page”的 <code>liveView</code> 属性。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">PlaygroundPage</span>.current.liveView = &lt;# <span class="type">An</span> instance of <span class="type">UIView</span> or <span class="type">UIViewController</span> #&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="“page”的属性列表"><a href="#“page”的属性列表" class="headerlink" title="“page”的属性列表"></a>“page”的属性列表</h4><p>“Page”的属性列表（<code>Manifest.plist</code>）决定“page”的名称和用于在 Swift Playgrounds 中显示“page”的元数据。</p>
+<ul>
+<li>CodeCopySetup<ul>
+<li>可选</li>
+<li>一个字典，用于指定用户在“page”之间复制内容时阅读的说明。</li>
+</ul>
+</li>
+<li><code>LiveViewEdgeToEdge</code><ul>
+<li>必须</li>
+<li>一个布尔值，用于控制实时视图的初始大小。设置为 <code>true(YES)</code> 可以填充整个实时视图区域，其中包括覆盖实时视图的“运行”和“提示”按钮。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225000957189.png" alt="image-20200225000957189"></li>
+</ul>
+</li>
+<li><code>LiveViewMode</code><ul>
+<li>必须</li>
+<li>一个字符串，当实时视图不运行时，用于控制实时视图区域是否显示。设置为 <code>VisibleByDefault</code> 可在“page”打开时显示实时视图。否则，设置为 <code>HiddenByDefault</code> 隐藏实时视图，直到用户运行“page”为止。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001420066.png" alt="image-20200225001420066"></li>
+</ul>
+</li>
+<li><code>Name</code><ul>
+<li>必须</li>
+<li>一个字符串，用于制定在 Swift Playgrounds 中显示给用户的“page”的名称。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001553835.png" alt="image-20200225001553835"></li>
+</ul>
+</li>
+<li><code>PlaygroundLoggingMode</code><ul>
+<li>可选</li>
+<li>一个字符串，用于指定是否在每个语句旁边显示在页面上运行的 Swift 语句的结果。设置为 <code>Normal</code> 以显示结果；否则，设置为 <code>Off</code> 。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225001817675.png" alt="image-20200225001817675"></li>
+</ul>
+</li>
+<li><code>PosterReference</code><ul>
+<li>可选</li>
+<li>一个字符串，用于引用图像文件，该文件在实时视图运行之前在实时视图区域中居中显示且不缩放。该图像文件可以位于“book”的任何“Resources”文件夹中。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225002100391.png" alt="image-20200225002100391"></li>
+</ul>
+</li>
+<li><code>UserModuleCodeCompletionDirectives</code><ul>
+<li>可选</li>
+<li>一个字符串数组，用来控制显示在输入法快捷栏中的来自“module”的代码补全或提示。每个补全的语法与在 <code>main.swift</code> 文件的代码补全定界符（code-completion delimiter）中使用的语法相同。</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225002850984.png" alt="image-20200225002850984"></li>
+</ul>
+</li>
+<li><code>UserModuleSourceFileToActivate</code><ul>
+<li>可选</li>
+<li>一个字符串，用户打开此页面时用于指定活动Swift文件。设置为一个 Swift 文件相对于“book”中Contents文件夹的路径。例如：<code>UserModules/MyModule.playgroundmodule/Sources/MyModule.swift</code> 。</li>
+</ul>
+</li>
+<li><code>UserModuleSourceFilesToOpen</code><ul>
+<li>可选</li>
+<li>一个字符串数组，用户打开此页面时，用于指定应打开哪些 Swift 文件。数组元素的顺序决定了 Swift Playgrounds 界面中文件的显示顺序。</li>
+</ul>
+</li>
+</ul>
+<h3 id="添加“cutscene”"><a href="#添加“cutscene”" class="headerlink" title="添加“cutscene”"></a>添加“cutscene”</h3><p>创建一个子文件夹，里面包含两样文件：一个属性列表和“cutscene”的元数据。</p>
+<p>使用“cutscene”以动画的方式解释或者介绍概念或者提要。应当将“cutscene”和“page”一同放置在“chapter”中。</p>
+<h4 id="创建一个“cutscene”的文件夹"><a href="#创建一个“cutscene”的文件夹" class="headerlink" title="创建一个“cutscene”的文件夹"></a>创建一个“cutscene”的文件夹</h4><p>在想要为其创建“cutscene”的“chapter”的目录（以 <code>.playgroundchapter</code> 为后缀的文件夹）下，创建一个子文件夹，它的名字必须以 <code>cutscenepage</code> 结尾。“cutscene”文件夹需要两个部分：名为 <code>Manifest.plist</code> 的清属性列表和包含“cutscene”的 HTML 内容的 PrivateResources 文件夹。</p>
+<p>在 Xcode 中，在这个新的“cutscene”文件夹中，添加一个名为 <code>Manifest.plist</code> 的文件作为该“page”的属性列表。具体步骤如下：</p>
+<ol>
+<li><p>选择 （File &gt; New &gt; File…）。</p>
+</li>
+<li><p>在弹出框中找到 <code>Property List</code> 选项（在 iOS &gt; Resource 中），然后下一步。</p>
+</li>
+<li><p>将名字改为 Manifest ，创建文件。</p>
+<p>使用属性列表（<code>Manifest.plist</code>）列出“page”的名称和配置元数据。</p>
+</li>
+</ol>
+<blockquote>
+<p>创建完成后，文件结构应类似如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── Pages</span><br><span class="line">&gt;  ├── Intro.cutscenepage</span><br><span class="line">&gt;  │   ├── Manifest.plist</span><br><span class="line">&gt;  │   └── PrivateResources</span><br><span class="line">&gt;  └── Page1.playgroundpage</span><br><span class="line">&gt;      ├── Manifest.plist</span><br><span class="line">&gt;      └── main.swift</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="添加“cutscene”的资源"><a href="#添加“cutscene”的资源" class="headerlink" title="添加“cutscene”的资源"></a>添加“cutscene”的资源</h4><p>通过使用 HTML 和在 HTML 中引用的任何资源，在 Swift Playgrounds 中创建“cutscene”。 为“cutscene”编写的 HTML 可以包括 CSS ， JavaScript 和 SVG （用于动画）。 “cutscene”还可以包括图像，声音和视频等媒体。<br>将“cutscene”中使用的所有资源放在其 PrivateResources 文件夹中。</p>
+<blockquote>
+<p>注意：</p>
+<p>如果要对“cutscene”进行本地化处理，那么就需要将“cutscene”的文件用本地化文件夹（比如：<code>en.lproj</code>）封装在 PrivateResources 文件夹中。</p>
+<p>类似如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── Pages</span><br><span class="line">&gt;  ├── Intro.cutscenepage</span><br><span class="line">&gt;  │   ├── Manifest.plist</span><br><span class="line">&gt;  │   └── PrivateResources</span><br><span class="line">&gt;  │       ├── de.lproj</span><br><span class="line">&gt;  │       ├── en.lproj</span><br><span class="line">&gt;  │       ├── fr.lproj</span><br><span class="line">&gt;  │       ├── it.lproj</span><br><span class="line">&gt;  │       ├── ja.lproj</span><br><span class="line">&gt;  │       └── zh_CN.lproj</span><br><span class="line">&gt;  └── Page1.playgroundpage</span><br><span class="line">&gt;      ├── Manifest.plist</span><br><span class="line">&gt;      └── main.swift</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="“cutscene”的属性列表"><a href="#“cutscene”的属性列表" class="headerlink" title="“cutscene”的属性列表"></a>“cutscene”的属性列表</h4><ul>
+<li><code>CutsceneReference</code><ul>
+<li>必须</li>
+<li>一个字符串，包含“cutscene”的动画的 HTML 文件的路径。 该路径相对于“cutscene”的 PrivateResources 文件夹。</li>
+</ul>
+</li>
+<li><code>Name</code><ul>
+<li>必须</li>
+<li>一个字符串，决定“cutscene”的名称。 选择一个对在 Swift Playgrounds 中阅读的用户有意义的名称。</li>
+</ul>
+</li>
+<li><img src="/2020/05/14/howToWriteAPlaygroundBook-1/image-20200225012514919.png" alt="image-20200225012514919"></li>
+</ul>
+<h3 id="添加“module”"><a href="#添加“module”" class="headerlink" title="添加“module”"></a>添加“module”</h3><p>使代码能够在多个“chapter”中使用，以此教授可复用代码的价值。（Make code available across multiple chapters to teach the value of reusable code.）</p>
+<p>代码文件在整个“book”文件结构中的位置，决定了“book”中的资源能否访问到此代码文件。例如“book”中的每一个“page”的 <code>main.swift</code> 文件是互相独立的。如果一个“book”中有多个访问共享代码资源的“page”或者“chapter”，就应当将这样的代码放置在“module”中。</p>
+<p>通过在“book”中共享代码，可以提供一致的 APIs 来教授统一的接口。（By sharing code throughout your book, you provide consistent APIs that teach a common interface.）</p>
+<h4 id="通过“module”来共享代码"><a href="#通过“module”来共享代码" class="headerlink" title="通过“module”来共享代码"></a>通过“module”来共享代码</h4><p>“module”是 Swift 代码的文件夹，可用于定义供用户使用的API，同时还可实现页面实时视图的功能。有两种模块：</p>
+<ul>
+<li><p>专用模块（Private Modules）：用户无需检查或编辑的代码。在这些“module”中定义的公共 API 和文档仍然可供用户使用。将这些“module”放在 <code>.playgroundbook/Contents/Modules</code> 目录中。</p>
+</li>
+<li><p>用户可编辑模块（User-Editable Modules）：当代码是“book”的说明性内容的一部分时使用。例如，可以通过让用户利用前几章中的代码来解决下一章中的问题，从而教会代码重用的价值。将这些“module”放在 <code>.playgroundbook/Contents/UserModules</code> 目录中。</p>
+</li>
+</ul>
+<p>在 Modules 或 UserModules 目录下，将每个“module”放置在以后缀 <code>.playgroundmodule</code> 结尾的新目录中。将“module”的源代码放在 <code>.playgroundmodule</code> 目录下名为 Sources 的目录下。例如，要定义一个名为“Statistics”的用户可编辑模块，请将代码放在诸如  <code>UserModules/Statistics.playgroundmodule/Sources/MyStatisticsAPIs.swift</code> 之类的路径中。<br>“module”的名称必须是有效的 Swift 标识符，因此 <code>.playgroundmodule</code> 目录名称不能包含无效的字符序列，例如空格。</p>
+<blockquote>
+<p>创建完成后，文件结构应类似如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── Contents</span><br><span class="line">&gt;  ├── Chapters</span><br><span class="line">&gt;  │   └── Chapter1.playgroundchapter</span><br><span class="line">&gt;  │       ├── Manifest.plist</span><br><span class="line">&gt;  │       └── Pages</span><br><span class="line">&gt;  │           ├── Intro.cutscenepage</span><br><span class="line">&gt;  │           └── Page1.playgroundpage</span><br><span class="line">&gt;  ├── Manifest.plist</span><br><span class="line">&gt;  ├── Modules</span><br><span class="line">&gt;  │   └── Cutscenes.playgroundmodule</span><br><span class="line">&gt;  │       └── Sources</span><br><span class="line">&gt;  │           ├── SPCCutSceneItem.swift</span><br><span class="line">&gt;  │           └── SPCHypeCutSceneController.swift</span><br><span class="line">&gt;  ├── PrivateResources</span><br><span class="line">&gt;  └── UserModules</span><br><span class="line">&gt;      └── UserModule.playgroundmodule</span><br><span class="line">&gt;          └── Sources</span><br><span class="line">&gt;              └── SharedCode.swift</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<p>如果使用的 Swift Playground 书本格式 （<code>Swift Playground book format</code> ）在 6.0 以下下（即在“book”的属性列表（<code>Manifest.plist</code>）中的 <code>Version</code> 属性），则说明“module”不可用。 应当在与“book”，“chapter”或“page”中的 PublicResources 或 PrivateResources 目录相邻的名为 Sources 的目录下添加代码。</p>
+</blockquote>
+<h3 id="在“book”中共享资源"><a href="#在“book”中共享资源" class="headerlink" title="在“book”中共享资源"></a>在“book”中共享资源</h3><p>通过重复使用“book”中的素材（assets）来减少“book”的大小（储存占用）。</p>
+<p>将素材（assets）放置在“book”中的位置决定了它对“book”其他部分的可见性。 如果多个“page”或“chapter”需要访问一个共享的资源，请将这样的资源放置在更靠近“book”目录结构根目录的位置。 例如，“book”的其余部分看不到“page”的 PublicResources 目录中的图像。</p>
+<h4 id="创建共享资源"><a href="#创建共享资源" class="headerlink" title="创建共享资源"></a>创建共享资源</h4><p>共享资源的方式在很大程度上取决于打算在哪里使用该资源：</p>
+<ul>
+<li>在单个“page”或“cutscene”上共享时，请将资源放在 <code>.playgroundpage</code> 目录或 <code>.cutscenepage</code> 目录的 PublicResources 或 PrivateResources 目录中。</li>
+<li>在“chapter”的“page”之间共享资源时，请将资源放在 <code>.playgroundchapter</code> 目录的 PublicResources 或 PrivateResources 目录中。</li>
+<li>在整个“book”中共享资源时，请将资源放在“book”的 Contens文件夹目录中的 PublicResources 或 PrivateResources 目录中。</li>
+</ul>
+<p>用户可以看到并使用公共资源。 例如，如果希望用户从代码中选择几个图像之一，则将资源放置在 PublicResources 目录中； 否则，将其放在 PrivateResources 目录中。</p>
+<h4 id="共享本地化资源"><a href="#共享本地化资源" class="headerlink" title="共享本地化资源"></a>共享本地化资源</h4><p>如果“book”中内容支持多个本地化，请将本地化资源放在 PublicResources 或 PrivateResources 目录中的本地化项目目录中来共享资源。 根据本地化的 Language ID 命名本地化项目的目录，后跟 <code>.lproj</code> 后缀。 例如，本地化为英语和法语的“book”可能在两个位置共享章节资源：</p>
+<ul>
+<li><code>mybook.playgroundbook/Contents/Chapters/ch1.playgroundchapter/PublicResources/en.lproj</code> (for the English localization).</li>
+<li><code>mybook.playgroundbook/Contents/Chapters/ch1.playgroundchapter/PublicResources/fr.lproj</code> (for the French localization).</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/PlaygroundBook/" rel="tag"># PlaygroundBook</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/18/howToMarkupInXcode/" rel="next" title="Xcode 注释文档方法">
+                <i class="fa fa-chevron-left"></i> Xcode 注释文档方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Leonardo Lu</p>
+              <p class="site-description motion-element" itemprop="description">A ＝ { x | x∉A }</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Playground-的相关设置"><span class="nav-number">1.</span> <span class="nav-text">Playground 的相关设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Playground-Book"><span class="nav-number">1.1.</span> <span class="nav-text">创建 Playground Book</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译"><span class="nav-number">1.1.2.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">1.1.3.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在-iPad-上运行"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">在 iPad 上运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在-Mac-上运行"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">在 Mac 上运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Playground-Book-的文件结构"><span class="nav-number">1.2.</span> <span class="nav-text">Playground Book 的文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总体"><span class="nav-number">1.2.1.</span> <span class="nav-text">总体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“book”的属性列表"><span class="nav-number">1.2.2.</span> <span class="nav-text">“book”的属性列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加“chapter”"><span class="nav-number">1.2.3.</span> <span class="nav-text">添加“chapter”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个“chapter”"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">创建一个“chapter”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“chapter”的属性列表"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">“chapter”的属性列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加“page”"><span class="nav-number">1.2.4.</span> <span class="nav-text">添加“page”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个“page”"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">创建一个“page”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加代码和散文（描述）"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">添加代码和散文（描述）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加一个始终存在的实时视图"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">添加一个始终存在的实时视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“page”的属性列表"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">“page”的属性列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加“cutscene”"><span class="nav-number">1.2.5.</span> <span class="nav-text">添加“cutscene”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个“cutscene”的文件夹"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">创建一个“cutscene”的文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加“cutscene”的资源"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">添加“cutscene”的资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“cutscene”的属性列表"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">“cutscene”的属性列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加“module”"><span class="nav-number">1.2.6.</span> <span class="nav-text">添加“module”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过“module”来共享代码"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">通过“module”来共享代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在“book”中共享资源"><span class="nav-number">1.2.7.</span> <span class="nav-text">在“book”中共享资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建共享资源"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">创建共享资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享本地化资源"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">共享本地化资源</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leonardo Lu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '8NICkqCKUbkbwAFPj1s8qMLf-gzGzoHsz',
+    appKey: 'uCujOdh1qnLqmVXjF1JGwhKm',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('Copy');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":150},"mobile":{"show":false,"scale":0.2}});</script></body>
+</html>
