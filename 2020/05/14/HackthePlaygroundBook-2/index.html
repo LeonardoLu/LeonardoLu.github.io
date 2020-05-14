@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/25 更新于：2020/02/25 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta name="keywords" content="Swift,PlaygroundBook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何书写一份 PlaygroundBook (2)">
+<meta property="og:url" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/index.html">
+<meta property="og:site_name" content="Leonardo Lu">
+<meta property="og:description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/25 更新于：2020/02/25 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225151547479.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225153551829.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225154132754.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225161657673.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/7826cecd-2735-4d81-9144-dd89df6730f3.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225170450179.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/c23f0e08-f514-4ec2-9be8-ab143b439dbc.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/67d5c91b-0e1e-4299-a978-5491e259030c.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/a73a5a58-8565-43b7-a52e-e015561dadfa.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225232918682.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/10d92be8-4f95-457f-88de-901872a81478.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200226001358954.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/62783ae7-c9e3-456b-bae1-97b5d9b4a0f5.png">
+<meta property="og:image" content="https://docs-assets.developer.apple.com/published/efef6d214b/5406d079-a662-4ab9-bb1f-8de4c353e0c9.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200226013254388.png">
+<meta property="og:updated_time" content="2020-05-14T06:37:20.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何书写一份 PlaygroundBook (2)">
+<meta name="twitter:description" content="本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。 本文： 创建于： 2020/02/25 更新于：2020/02/25 当前版本： Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15) Xcode: version 11.3">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/image-20200225151547479.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何书写一份 PlaygroundBook (2) | Leonardo Lu</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Leonardo Lu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-resume">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.qwq.name:8888/" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Resume</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/14/HackthePlaygroundBook-2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Leonardo Lu">
+      <meta itemprop="description" content="A ＝ { x | x∉A }">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Leonardo Lu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何书写一份 PlaygroundBook (2)
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-05-14 14:33:56 / Modified: 14:37:20" itemprop="dateCreated datePublished" datetime="2020-05-14T14:33:56+08:00">2020-05-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Swift/PlaygroundBook/" itemprop="url" rel="index"><span itemprop="name">PlaygroundBook</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2020/05/14/HackthePlaygroundBook-2/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/05/14/HackthePlaygroundBook-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2020/05/14/HackthePlaygroundBook-2/" class="leancloud_visitors" data-flag-title="如何书写一份 PlaygroundBook (2)">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文以Apple Developer 官网资料以及笔者的实践和经历，归纳笔者所知道的“书写”一份 Playground Book 所能用到的技巧。</p>
+<p>本文：</p>
+<p>创建于： 2020/02/25</p>
+<p>更新于：2020/02/25</p>
+<p>当前版本：</p>
+<p>Swift: version 5.1.3 (swiftlang-1100.0.282.1 clang-1100.0.33.15)</p>
+<p>Xcode: version 11.3.1 (11C504)</p>
+<p>Playgrounds (on Mac) : Version 3.2 (1137.33.1)</p>
+<p>Playgrounds (on iPad) : Version 3.2 (1084.31)</p>
+<p>注意：本文的绝大部份涉及例子和代码的内容笔者只会在 Playgrounds (on Mac) 上进行测试，笔者认为两个平台在 Playground Book 本身的技术上并无差异。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Playground-的注解"><a href="#Playground-的注解" class="headerlink" title="Playground 的注解"></a>Playground 的注解</h1><blockquote>
+<p>在本文中会大量出现表示诸如：<code>Swift Playground Book</code> 、<code>Swift Playground Page</code> 等概念的名词，笔者认为将这些名词翻译出来（如：书、书页、章节）会使阅读十分不顺且难以理解，但直接使用英文全称有些冗长且同样不好理解。因此，笔者作出以下约定：</p>
+<ul>
+<li>将 <code>Swift playground Book(s)</code> 表示为 “book”</li>
+<li>将 <code>Swift playground Chapter(s)</code> 表示为 “Chapter”</li>
+<li>将 <code>Swift playground Page(s)</code> 表示为 “page”</li>
+<li>将 <code>Swift module(s)</code> 或 <code>UserModule</code> 表示为 “module”</li>
+<li>将 <code>Introduction</code> 或 <code>引导页</code> 表示为 ”cutscene“ </li>
+</ul>
+<p>以上概念不仅表示相对应的 Swift Playground Book 结构，还会表示对应结构的根目录。</p>
+</blockquote>
+<h2 id="为“page”书写描述短文"><a href="#为“page”书写描述短文" class="headerlink" title="为“page”书写描述短文"></a>为“page”书写描述短文</h2><p>在 Swift 代码中添加注释标记，以此将文本作为描述短文呈现给用户。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225151547479.png" alt="image-20200225151547479" style="zoom: 25%;"></p>
+<p>“page”总是需要描述短文来介绍在“page”上教授的概念。 可以使用一种特殊的 Swift 注释将一行或一小段文本标记为描述短文。在 Swift Playgrounds 中显示“page”的 <code>main.swift</code> 文件时，标记为描述短文的注释将使用具有一定比例的字体显示。 </p>
+<h3 id="添加单行的描述短文"><a href="#添加单行的描述短文" class="headerlink" title="添加单行的描述短文"></a>添加单行的描述短文</h3><p>要将一句简短的描述短文添加到“page”中，可以使用一句以冒号开头的 Swift 注释（<code>//:</code>）。如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//: This line contains a short sentence.</span></span><br></pre></td></tr></table></figure>
+<p>不带冒号的注释将被视为普通的Swift注释，并以等宽字体显示。 任何形式的注释之外的文本都将被视为 Swift 代码，并在点击“运行我的代码”时运行。</p>
+<blockquote>
+<p>Example Code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment">//: This line contains a short sentence.</span></span><br><span class="line">&gt; <span class="comment">// This line doesn't contains a short sentence.</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Example Result:</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225153551829.png" alt="image-20200225153551829" style="zoom: 33%;"></p>
+</blockquote>
+<h3 id="添加多行的描述短文"><a href="#添加多行的描述短文" class="headerlink" title="添加多行的描述短文"></a>添加多行的描述短文</h3><p>使用多行 Swift 注释获得更长的段落。 可以通过在注释的开始定界符后立即添加一个冒号来表示多行注释（<code>/*:</code>）。如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*:</span></span><br><span class="line"><span class="comment">    Roses are `UIColor.red`,</span></span><br><span class="line"><span class="comment">    Violets are 🔵,</span></span><br><span class="line"><span class="comment">    Swift Playgrounds are rad,</span></span><br><span class="line"><span class="comment">    and so are you!</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>无需使用特殊的定界符即可关闭多行注释； 使用常规注释结束语法（<code>* /</code>）来结束多行描述短文的注释块。</p>
+<blockquote>
+<p>Example Code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="comment">/*:</span></span><br><span class="line"><span class="comment">&gt;  Roses are `UIColor.red`,</span></span><br><span class="line"><span class="comment">&gt;  Violets are 🔵,</span></span><br><span class="line"><span class="comment">&gt;  Swift Playgrounds are rad,</span></span><br><span class="line"><span class="comment">&gt;  and so are you!</span></span><br><span class="line"><span class="comment">&gt; */</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Example Result:</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225154132754.png" alt="image-20200225154132754" style="zoom:33%;"></p>
+</blockquote>
+<h3 id="引用本地化中的描述短文"><a href="#引用本地化中的描述短文" class="headerlink" title="引用本地化中的描述短文"></a>引用本地化中的描述短文</h3><p>使用特殊的注释语法将“page”上的内容本地化：<code>//:#localized(key:</code><em>identifier</em><code>)</code> 。标识符键（<code>identifier</code>）必须对应于这个“page”的 PrivateResources 文件夹中每个本地化文件夹中的 <code>Prose.strings</code> 文件中的条目。</p>
+<p>下述的例子中，“ExplanationOfLoops”引用了“page”的 PrivateResources 文件夹内的 <code>en.lproj</code> 文件夹内 <code>Prose.strings</code> 文件里包含的描述短文。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//:#localized(key: "ExplanationOfLoops")</span></span><br></pre></td></tr></table></figure>
+<p>字符串文件（Strings File）（一种以 <code>.string</code> 为后缀结尾的文件）包含多个键值对（key-value），其中键（key）是用于标识本地化的描述短文代码块的短语，而值（value）是本地化的描述短文。</p>
+<p>下面的示例展示了进行英文本地化操作的“ExplanationOfLoops”在 <code>Prose.strings</code> 文件内的键值对：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* An intro to loops. */</span></span><br><span class="line"><span class="string">"ExplanationOfLoops"</span> = <span class="string">"Use loops to repeat an action multiple times until a condition is met."</span>;</span><br></pre></td></tr></table></figure>
+<p>经过渲染后，“page”会显示“Use loops to repeat an action multiple times until a condition is met.”而不是“ExplanationOfLoops”。</p>
+<p>如果“page”有多个本地化语言的版本，那么此时引用的内容将与用户 iPad 语言版本保持一致。</p>
+<p>字符串文件（Strings File）是用于多种本地化和国际化处理的通用格式。</p>
+<blockquote>
+<p>创建后，某一“page”的文件结构应类似于：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; .</span><br><span class="line">&gt; └── Page1.playgroundpage</span><br><span class="line">&gt;  ├── Manifest.plist</span><br><span class="line">&gt;  ├── PrivateResources</span><br><span class="line">&gt;  │   └── en.lproj</span><br><span class="line">&gt;  │       └── Prose.strings</span><br><span class="line">&gt;  └── main.swift</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>进行文章叙述的操作后可以看到：</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225161657673.png" alt="image-20200225161657673" style="zoom:33%;"></p>
+</blockquote>
+<hr>
+<h2 id="指定“page”上可编辑的区域"><a href="#指定“page”上可编辑的区域" class="headerlink" title="指定“page”上可编辑的区域"></a>指定“page”上可编辑的区域</h2><p>用过使用符号来对 <code>main.swift</code> 中的允许用户编辑和复制的代码进行标记，以此引导用户进行学习。</p>
+<p>可以通过使用特殊的注释语法将代码区域标记为可编辑区域。 使用可编辑和不可编辑的代码区域来指导用户完成关卡所需要编辑的代码。</p>
+<p>默认情况下，除非添加至少一个可编辑区域，否则“page”上的所有代码都是可编辑的。 将“page”中的任何区域标记为可编辑，将锁定页面上的其余代码。 对于面向初学者的“page”，建议将可编辑区域限制在一个较小的区域，以避免可能的意外编辑使得“page”难以恢复。</p>
+<h3 id="标记内联可编辑区域"><a href="#标记内联可编辑区域" class="headerlink" title="标记内联可编辑区域"></a>标记内联可编辑区域</h3><p>可以使用内联可编辑区域来使用户编辑一小段代码。 例如，通过首先让用户尝试改变单个值或变量来查看它如何影响整个页面的执行情况，从而逐步揭示更大范围的代码是如何工作的。</p>
+<p>可以使用一个特殊的注释表达式来添加一个内联可编辑区域：</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/7826cecd-2735-4d81-9144-dd89df6730f3.png" alt="A diagram showing &quot;/*#-editable-code&quot;, followed by placeholder text, followed by &quot;*/&quot;, followed by the content placeholder, followed by &quot;/*#-end-editable-code*/&quot;."></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*#-editable-code */</span> <span class="comment">/*#-end-editable-code*/</span></span><br></pre></td></tr></table></figure>
+<p>占位符（<code>placeholder text</code>）是在用户开始编辑并添加自己的代码之前一直显示的文本。 内容（<code>content</code>）是直到该值被编辑之前 Swift 代码默认值的文本。</p>
+<p>下述例子中的内敛可编辑区域在编辑前会一直显示“number of repetitions”，并且会使用 <code>1</code>  作为 Swift 代码的初始值。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//: Enter a value for the number of repetitions so that `x` is set to 25</span></span><br><span class="line"><span class="comment">//: ---</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span> ... <span class="comment">/*#-editable-code number of repetitions*/</span><span class="number">1</span><span class="comment">/*#-end-editable-code*/</span> &#123;</span><br><span class="line">    x += <span class="number">5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当显示在“page”上时，上述例子中的代码将与在一个可点击的按钮中的占位符文本一起显示，点击按钮以激活编辑功能。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225170450179.png" alt="image-20200225170450179" style="zoom:33%;"></p>
+<blockquote>
+<p>注意：</p>
+<p>当 <code>content</code> 没有内容时，可编辑区域才会显示出 <code>placeholder text</code> 的内容。</p>
+<p>否则将直接显示出 <code>content</code> 的内容。</p>
+</blockquote>
+<h3 id="标记多行可编辑区域"><a href="#标记多行可编辑区域" class="headerlink" title="标记多行可编辑区域"></a>标记多行可编辑区域</h3><p>使用相同的特殊注释语法标记多行的可编辑区域。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/c23f0e08-f514-4ec2-9be8-ab143b439dbc.png" alt="img" style="zoom:67%;"></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-editable-code</span></span><br><span class="line"><span class="comment">//#-end-editable-code</span></span><br></pre></td></tr></table></figure>
+<p>在多行可编辑区域中编写的内容必须与周围的代码具有相同的缩进级别。</p>
+<h3 id="使用占位符标记可编辑区域"><a href="#使用占位符标记可编辑区域" class="headerlink" title="使用占位符标记可编辑区域"></a>使用占位符标记可编辑区域</h3><p>可以在可编辑区域使用特殊的占位符。 这种占位符在“page”上表现为一个可以点击选择的标签（label），它允许包含空格和特殊字符。 可以在这种占位符标记中包含任何 Swift 的类型（<code>class</code> 或 <code>struct</code>）的名称，以此限制在可编辑区域中输入的值的类型。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/67d5c91b-0e1e-4299-a978-5491e259030c.png" alt="img" style="zoom: 50%;"></p>
+<p>当用户选择了一个“page”上的一个占位符就会使输入快捷栏显示出来。如果选择的占位符包含了一个指定的类型，那么就会显示出便于输入该类型的特定的弹出框（如果 Swift Playground 具有的该功能）。例如，如果占位符所指定输入的类型是 <code>Int</code> 类型，那么当选中这个占位符时将会弹出数字输入框。</p>
+<p>以下展示了无类型指定和有类型指定的占位符变量的声明方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> untypedLlamaCount = <span class="comment">/*#-editable-code*/</span>&lt;#number of llamas#&gt;<span class="comment">/*#-end-editable-code*/</span></span><br><span class="line">     </span><br><span class="line"><span class="keyword">var</span> typedLlamaCount = <span class="comment">/*#-editable-code*/</span>&lt;#<span class="type">T</span>##number of llamas##<span class="type">Int</span>#&gt;<span class="comment">/*#-end-editable-code*/</span></span><br></pre></td></tr></table></figure>
+<p>以下这张图片展示了当指定输入类型为 <code>Int</code> 的占位符被选中后弹出数字输入框时的界面：</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/a73a5a58-8565-43b7-a52e-e015561dadfa.png" alt="Screenshot showing a 10-digit number entry interface in response to a tapped placeholder token with an Int type." style="zoom:33%;"></p>
+<blockquote>
+<p>注意：</p>
+<p>在 Swift 代码文件本身也可以渲染占位符（Xcode 的优秀功能），所以当声明正确的占位符后，在代码文件中同样会被渲染成占位符。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200225232918682.png" alt="image-20200225232918682"></p>
+<p>比较奇怪的是笔者这里按照要求书写代码（复制粘贴）之后，在两个平台上都未能显示出上述的数字输入框。</p>
+</blockquote>
+<h3 id="使可编辑区域能够被复制"><a href="#使可编辑区域能够被复制" class="headerlink" title="使可编辑区域能够被复制"></a>使可编辑区域能够被复制</h3><hr>
+<h2 id="在“page”上隐藏代码"><a href="#在“page”上隐藏代码" class="headerlink" title="在“page”上隐藏代码"></a>在“page”上隐藏代码</h2><p>使用特殊的 Swift 注释方法使得 “page”（<code>main.swift</code>）上的代码隐藏起来，但依旧会被执行。</p>
+<p>可以隐藏那些与“page”所要展示的内容无关的代码，比如“page”设置相关的函数的调用、评估用户进度的代码、可编辑区域中的函数等。当用户运行“page”时，被隐藏的代码依然会被执行。</p>
+<p>可以将想要隐藏的代码放置在 <code>/hidden-code</code> 和 <code>/end-hidden-code</code> 两个定界符之间。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/10d92be8-4f95-457f-88de-901872a81478.png" alt="Diagram showing the hidden-code and end-hidden code comment syntax. The first line is &quot;//#-hidden-code&quot;, followed by a placeholder line, terminated with a line with contents &quot;//#-end-hidden-code&quot;." style="zoom: 50%;"></p>
+<p>下述内容展示了在“page”上书写的原始的代码，包括了被隐藏的代码。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-hidden-code</span></span><br><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">import</span> PlaygroundSupport</span><br><span class="line"><span class="keyword">let</span> viewRect = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="number">100</span> , height: <span class="number">400</span>)</span><br><span class="line"><span class="keyword">let</span> theView = <span class="type">CustomView</span>(frame: viewRect)</span><br><span class="line"><span class="type">PlaygroundPage</span>.current.liveView = theView</span><br><span class="line"><span class="comment">//#-end-hidden-code</span></span><br><span class="line"><span class="comment">//#-editable-code</span></span><br><span class="line">theView.markColor = <span class="type">UIColor</span>.darkGray</span><br><span class="line">theView.isChecked = <span class="literal">true</span></span><br><span class="line"><span class="comment">//#-end-editable-code</span></span><br></pre></td></tr></table></figure>
+<p>下述图片展示了上述代码在被 Swift Playground 渲染之后的结果。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200226001358954.png" alt="image-20200226001358954" style="zoom: 33%;"></p>
+<hr>
+<h2 id="自定义快捷栏中分代码补全"><a href="#自定义快捷栏中分代码补全" class="headerlink" title="自定义快捷栏中分代码补全"></a>自定义快捷栏中分代码补全</h2><p>通过在快捷栏中隐藏不必要的符号和显示其他的符号来引导用户完成解决方案。</p>
+<p>通过隐藏和显示不同的符号或符号集来自定义快捷方式栏中显示的代码补全。可以在编辑“page”的任何时候显示或隐藏某个代码补全。</p>
+<p>下图显示了“学习编码1”中的自定义代码补全。 自定义快捷方式栏仅显示四种方法（<code>function</code>），而不显示所有可能的代码补全，例如 Swift 标准库或当前模块中的公共符号。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/62783ae7-c9e3-456b-bae1-97b5d9b4a0f5.png" alt="img" style="zoom: 50%;"></p>
+<h3 id="添加用于描述代码补全的注释"><a href="#添加用于描述代码补全的注释" class="headerlink" title="添加用于描述代码补全的注释"></a>添加用于描述代码补全的注释</h3><p>通过一行代码补全定界符（code-completion delimiter）来指定某一代码补全显示或隐藏。注意，这句注释不需要遵从附近代码的缩进格式。</p>
+<p><img src="https://docs-assets.developer.apple.com/published/efef6d214b/5406d079-a662-4ab9-bb1f-8de4c353e0c9.png" alt="img"></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(&lt;#namespace#&gt;, hide, &lt;#completions#&gt;)</span></span><br><span class="line"><span class="comment">//#-code-completion(&lt;#namespace#&gt;, show, &lt;#completions#&gt;)</span></span><br></pre></td></tr></table></figure>
+<p>使用代码补全定界符可以在可能的补全列表中添加或删除一个符号或一组符号。 在第一个参数命名空间（<code>namespace</code>）中，指定可能的符号的空间。 在下一个参数中，指定要执行的操作：从可能的代码完成列表中添加符号（<code>show</code>）或删除符号（<code>hide</code>）。 命名空间（<code>namespace</code>）和操作（<code>action</code>）的组合通过使用英文逗号隔开的补全列表的形式呈现，例如函数名称或模块名称。</p>
+<p>在“page”上包含许多代码补全定界符。 用户在快捷栏中看到的可能使用的补全的列表包括在当前插入点处可见的所有符号。 当插入点位与“page”的代码源文件（<code>main.swift</code>）中的代码补全定界符的下方时，符合要求的代码定界符才会生效。</p>
+<h3 id="选择符号的命名空间"><a href="#选择符号的命名空间" class="headerlink" title="选择符号的命名空间"></a>选择符号的命名空间</h3><p>使用代码补全定界符的命名空间（<code>namespace</code>）参数，以此来决定要显示或隐藏的符号的范围。 可以使用以下任何值来选择符号名称空间：</p>
+<ul>
+<li><p><code>bookauxiliarymodule</code></p>
+<ul>
+<li>任何来自该“book”中名为 <code>Sources</code> 文件夹内的 Swift 源文件中的公共符号。</li>
+</ul>
+</li>
+<li><p><code>chapterauxiliarymodule</code></p>
+<ul>
+<li>任何来自当前“chapter”中名为 <code>Sources</code> 文件夹内的 Swift 源文件中的公共符号。</li>
+</ul>
+</li>
+<li><p><code>currentmodule</code></p>
+<ul>
+<li>任何来自当前“page”的公共符号。</li>
+</ul>
+</li>
+<li><p><code>description</code></p>
+<ul>
+<li><p>逗号分隔的字符串列表中的任何公共符号。</p>
+</li>
+<li><p>对应的 <code>completions</code> 参数：字符串的列表，可根据快捷方式栏中显示的名称与符号补全进行匹配。</p>
+</li>
+<li><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(description, show, "randomInt(from: Int, to: Int)", "turnLock(up: Book, numberOfTimes: Int)")</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>everything</code></p>
+<ul>
+<li><p>任何来自“module”的公共符号。</p>
+</li>
+<li><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(everything, hide)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>identifier</code></p>
+<ul>
+<li><p>逗号分隔的参数列表中的任何关键字。</p>
+</li>
+<li><p>对应的 <code>completions</code> 参数：标识符列表，包括函数名称，标点，变量和任何其他符号。</p>
+</li>
+<li><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(identifier, show, moveForward(), turnLeft(), collectGem(), toggleSwitch())</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>keyword</code></p>
+<ul>
+<li><p>逗号分隔的参数列表中的任何关键字。</p>
+</li>
+<li><p>对应的 <code>completions</code> 参数：<code>for</code> 、 <code>func</code> 、 <code>if</code> 、 <code>let</code> 、 <code>var</code>  and  <code>while</code> 。</p>
+</li>
+<li><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(keyword, for)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>literal</code></p>
+<ul>
+<li>逗号分隔的参数列表中的任何字面量类型。</li>
+<li>对应的 <code>completions</code> 参数：<code>array</code> 、 <code>boolean</code> 、 <code>color</code> 、 <code>dictionary</code> 、 <code>image</code> 、 <code>integer</code> 、 <code>nil</code> 、<code>string</code> and <code>tuple</code> 。</li>
+</ul>
+</li>
+<li><p><code>module</code></p>
+<ul>
+<li>任何来自特定“module”的公共符号</li>
+<li>对应的 <code>completions</code> 参数：“module”的名称组成的列表。</li>
+</ul>
+</li>
+<li><p><code>pageauxiliarymodule</code></p>
+<ul>
+<li>任何来自当前“page”中名为 <code>Sources</code> 文件夹内的 Swift 源文件中的公共符号。</li>
+</ul>
+</li>
+<li><p><code>snippet</code></p>
+<ul>
+<li>逗号分隔的参数列表中的所有代码片段。</li>
+<li>对应的 <code>completions</code> 参数：代码片段的名称组成的列表。</li>
+</ul>
+</li>
+</ul>
+<p>如果需要在重载符号之间消除歧义，使用 <code>description</code> 而不是 <code>identifier</code> 作为命名空间（<code>namespace</code>）的参数。 <code>description</code>  包含可用于选择特定重载的类型信息。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#-code-completion(identifier, show, randomInt(from:to:), turnLock(up:numberOfTimes:)</span></span><br><span class="line"><span class="comment">//#-code-completion(description, show, "randomInt(from: Int, to: Int)", "turnLock(up: Book, numberOfTimes: Int)")</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="本地化代码注释和字符串"><a href="#本地化代码注释和字符串" class="headerlink" title="本地化代码注释和字符串"></a>本地化代码注释和字符串</h2><p>标记一块代码区域将它替换为为当前用户本地化之后的代码。</p>
+<p>如果要编写一个能够在多个语言地区发布的“book”，可以使用注释语法对每个页面上的被划分为本地化区域的注释和字符串进行本地化。</p>
+<h3 id="添加本地化操作定界符"><a href="#添加本地化操作定界符" class="headerlink" title="添加本地化操作定界符"></a>添加本地化操作定界符</h3><p>将需要本地化操作的代码包裹在定界符中，比如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">//#-localizable-zone(welcome1)</span></span><br><span class="line"><span class="comment">Welcome!</span></span><br><span class="line"><span class="comment">//#-end-localizable-zone</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>每个定界符带有一个唯一的区域标识符（例如， <code>welcome1</code> ， <code>welcome2</code> 等），该标识符与为每个页面定义的 <code>LocalizableCode.strings</code> 文件中的条目匹配。</p>
+<p>还可以使用内联注释定界符使字符串本地化；例如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> message = <span class="string">"/*#-localizable-zone(welcome2)*/Hello!/*#-end-localizable-zone*/"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：</p>
+<p>仅使用本地化定界符将代码注释和字符串文字括起来。 这样做有助于确保不会引入对语言环境敏感的编译错误。</p>
+</blockquote>
+<h3 id="创建一个本地化文件"><a href="#创建一个本地化文件" class="headerlink" title="创建一个本地化文件"></a>创建一个本地化文件</h3><p>当用户打开“book”中的“page”时，系统会在 <code>LocalizableCode.strings</code> 文件的相应语言目录（例如，“page” / <code>PrivateResources</code> / <code>de.lproj</code> 目录中查找德语本地化字符串）中查找。 然后，将分隔符与其对应的区域 ID 匹配，并用本地化的文本替换页面中的文本字符串。</p>
+<p>将本地化字符串文件格式化为本地化标识符列表，后跟本地化字符串。 以下示例定义了由 <code>welcome1</code> 和 <code>welcome2</code> 标识的内容的本地化形式：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Initial greeting. */</span></span><br><span class="line"><span class="string">"welcome1"</span> = <span class="string">"Willkommen!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Second greeting. */</span></span><br><span class="line"><span class="string">"welcome2"</span> = <span class="string">"Guten Tag!"</span>;</span><br></pre></td></tr></table></figure>
+<p>经过渲染，经过本地化处理的注释和字符串会显示在界面的相应的位置上。</p>
+<p><img src="/2020/05/14/HackthePlaygroundBook-2/image-20200226013254388.png" alt="image-20200226013254388" style="zoom: 67%;"></p>
+<hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+            <a href="/tags/PlaygroundBook/" rel="tag"># PlaygroundBook</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/14/howToWriteAPlaygroundBook-1/" rel="next" title="如何书写一份 PlaygroundBook (1)">
+                <i class="fa fa-chevron-left"></i> 如何书写一份 PlaygroundBook (1)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Leonardo Lu</p>
+              <p class="site-description motion-element" itemprop="description">A ＝ { x | x∉A }</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Playground-的注解"><span class="nav-number">1.</span> <span class="nav-text">Playground 的注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为“page”书写描述短文"><span class="nav-number">1.1.</span> <span class="nav-text">为“page”书写描述短文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加单行的描述短文"><span class="nav-number">1.1.1.</span> <span class="nav-text">添加单行的描述短文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加多行的描述短文"><span class="nav-number">1.1.2.</span> <span class="nav-text">添加多行的描述短文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用本地化中的描述短文"><span class="nav-number">1.1.3.</span> <span class="nav-text">引用本地化中的描述短文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指定“page”上可编辑的区域"><span class="nav-number">1.2.</span> <span class="nav-text">指定“page”上可编辑的区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记内联可编辑区域"><span class="nav-number">1.2.1.</span> <span class="nav-text">标记内联可编辑区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记多行可编辑区域"><span class="nav-number">1.2.2.</span> <span class="nav-text">标记多行可编辑区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用占位符标记可编辑区域"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用占位符标记可编辑区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使可编辑区域能够被复制"><span class="nav-number">1.2.4.</span> <span class="nav-text">使可编辑区域能够被复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在“page”上隐藏代码"><span class="nav-number">1.3.</span> <span class="nav-text">在“page”上隐藏代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义快捷栏中分代码补全"><span class="nav-number">1.4.</span> <span class="nav-text">自定义快捷栏中分代码补全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用于描述代码补全的注释"><span class="nav-number">1.4.1.</span> <span class="nav-text">添加用于描述代码补全的注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择符号的命名空间"><span class="nav-number">1.4.2.</span> <span class="nav-text">选择符号的命名空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地化代码注释和字符串"><span class="nav-number">1.5.</span> <span class="nav-text">本地化代码注释和字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加本地化操作定界符"><span class="nav-number">1.5.1.</span> <span class="nav-text">添加本地化操作定界符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个本地化文件"><span class="nav-number">1.5.2.</span> <span class="nav-text">创建一个本地化文件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leonardo Lu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '8NICkqCKUbkbwAFPj1s8qMLf-gzGzoHsz',
+    appKey: 'uCujOdh1qnLqmVXjF1JGwhKm',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function(i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+        var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function(e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function() {
+          $b.text('Copy');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"scale":1,"jsonPath":"/live2dw/assets/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":150},"mobile":{"show":false,"scale":0.2}});</script></body>
+</html>
