@@ -252,6 +252,127 @@ z\\
       </tags>
   </entry>
   <entry>
+    <title>Data Structures in Swift — Standard Library</title>
+    <url>/2018/12/12/Data-Structures-in-Swift/</url>
+    <content><![CDATA[<h1 id="Standard-Library"><a href="#Standard-Library" class="headerlink" title="Standard Library"></a>Standard Library</h1><p>在深入学习数据结构之前，首先将看到一些Swift中的基础数据结构。Swift标准库是指定义Swift语言核心组件的框架。在里面，你会发现各种各样的工具和类型，以帮助建立Swift应用程序。<br>在本篇，将重点介绍标准库直接提供的两个数据结构:数组和字典。</p>
+<blockquote>
+<p>内容源于：By Matthijs Hollemans. “Data Structures &amp; Algorithms in Swift”. Apple Books.<br><a id="more"></a></p>
+</blockquote>
+<h1 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h1><h2 id="创建-声明-一个数组"><a href="#创建-声明-一个数组" class="headerlink" title="创建(声明)一个数组"></a>创建(声明)一个数组</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="type">Number</span> = [<span class="type">Int</span>]()  <span class="comment">// 声明一个空数组</span></span><br><span class="line"><span class="keyword">var</span> fibonacci:[<span class="type">Int</span>] = []  <span class="comment">// 同，声明一个空数组</span></span><br><span class="line"><span class="keyword">var</span> fibonacciNumber = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">13</span>,<span class="number">21</span>,<span class="number">34</span>]  <span class="comment">// 声明一个数组，元素类型是Int</span></span><br></pre></td></tr></table></figure>
+<p>注：数组的声明，必须包含两点——用以表示数组的标识和数组元素的类型，其中元素类型决定了所有元素的统一类型，同时swift可以自行推断数据类型</p>
+<h2 id="获取数组中的数据-内容"><a href="#获取数组中的数据-内容" class="headerlink" title="获取数组中的数据(内容)"></a>获取数组中的数据(内容)</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">fibonacciNumber[<span class="number">4</span>]  <span class="comment">// 获取数组的第五个元素，数组以0为第一个的标记</span></span><br><span class="line">fibonacciNumber[<span class="number">0</span>] = <span class="number">1</span>  <span class="comment">// 将第一个元素赋值为1</span></span><br><span class="line">fibonacciNumber[<span class="number">0</span>...<span class="number">3</span>] = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  <span class="comment">// 将首四个元素赋值</span></span><br><span class="line">fibonacciNumber  <span class="comment">// 获取数组本身</span></span><br></pre></td></tr></table></figure>
+<h2 id="属性-amp-方法-amp-常用操作"><a href="#属性-amp-方法-amp-常用操作" class="headerlink" title="属性&amp;方法&amp;常用操作"></a>属性&amp;方法&amp;常用操作</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">fibonacciNumber.<span class="built_in">count</span>  <span class="comment">// 获取数组的元素个数</span></span><br><span class="line">fibonacci.isEmpty  <span class="comment">// 判断数组是否为空</span></span><br><span class="line">fibonacciNumber.isEmpty  <span class="comment">// 判断数组是否为空</span></span><br><span class="line">fibonacciNumber.<span class="built_in">contains</span>(<span class="number">4</span>)  <span class="comment">// 判断数组是否包含某个元素</span></span><br><span class="line">fibonacciNumber.first  <span class="comment">// 获取数组第一个元素</span></span><br><span class="line">fibonacciNumber.last  <span class="comment">// 获取数组最后一个元素</span></span><br><span class="line">fibonacciNumber.removeFirst()  <span class="comment">// 移除第一个元素，返回移除的元素</span></span><br><span class="line">fibonacciNumber.removeLast()  <span class="comment">// 移除最后一个元素，返回元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">min</span>()  <span class="comment">// 求出数组中最小的元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">min</span>(by: &gt;)  <span class="comment">// 求出数组中最小的元素，以'&gt;'规则</span></span><br><span class="line">fibonacciNumber.<span class="built_in">max</span>()  <span class="comment">// 求出数组中最大的元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">max</span>(by: &gt;)  <span class="comment">// 求出数组中最大的元素，以'&gt;'规则</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropFirst</span>()  <span class="comment">// 移除第一个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropLast</span>()  <span class="comment">// 移除最后一个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropLast</span>(<span class="number">2</span>)  <span class="comment">// 移除最后两个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropFirst</span>(<span class="number">2</span>)  <span class="comment">// 移除前两个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.forEach &#123; (word) <span class="keyword">in</span>  <span class="comment">// 遍历数组，每次读取的结果以word指代</span></span><br><span class="line"><span class="built_in">print</span>(word)</span><br><span class="line">&#125;</span><br><span class="line">fibonacciNumber.append(<span class="number">55</span>)  <span class="comment">// 在数组尾添加元素55</span></span><br><span class="line">fibonacciNumber += [<span class="number">89</span>]  <span class="comment">// 在数组尾添加元素89</span></span><br><span class="line">fibonacciNumber.insert(<span class="number">0</span>, at: <span class="number">0</span>)  <span class="comment">// 在数组序列为0的位置插入0</span></span><br><span class="line">fibonacciNumber.remove(at: <span class="number">0</span>)  <span class="comment">// 移除数组序列为0的元素</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> fibonacciNumber &#123;  <span class="comment">// 遍历数组，每次读取的结果以item指代</span></span><br><span class="line"><span class="built_in">print</span>(item)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (index,value) <span class="keyword">in</span> fibonacciNumber.enumerated()&#123;  </span><br><span class="line"><span class="comment">// 元组遍历字典，字典由数组元素和其序列合成</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\(index+1) and \(value)"</span>)</span><br><span class="line">&#125;</span><br><span class="line">fibonacciNumber.<span class="built_in">sort</span>(by : &gt;)  <span class="comment">// 原地排序数组，数组本身被更改，'&gt;'为规则 </span></span><br><span class="line">fibonacciNumber.sorted()  <span class="comment">// 为数组排序，返回结果，不更改自身</span></span><br><span class="line">fibonacciNumber.reversed()  <span class="comment">// 反转数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">distance</span>(from: <span class="number">1</span>, to: <span class="number">4</span>)  <span class="comment">// 获取距离</span></span><br></pre></td></tr></table></figure>
+<h1 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h1><h2 id="创建-声明-一个字典"><a href="#创建-声明-一个字典" class="headerlink" title="创建(声明)一个字典"></a>创建(声明)一个字典</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> character = [<span class="type">Int</span>:<span class="type">String</span>]()</span><br><span class="line"><span class="keyword">var</span> letter:[<span class="type">Int</span>:<span class="type">String</span>] = [:]</span><br><span class="line"><span class="keyword">var</span> characters = [</span><br><span class="line"><span class="number">1</span>:<span class="string">"R"</span>,</span><br><span class="line"><span class="number">2</span>:<span class="string">"B"</span>,</span><br><span class="line"><span class="number">3</span>:<span class="string">"C"</span>,</span><br><span class="line"><span class="number">4</span>:<span class="string">"D"</span>,</span><br><span class="line"><span class="number">5</span>:<span class="string">"E"</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>注：字典的声明，必须包含三点——用以表示字典的标识以及key值和value值的类型，其中key值和value值的类型决定了相应部分的统一类型，同时swift可以自行推断数据类型</p>
+<h2 id="获取字典中的数据-内容"><a href="#获取字典中的数据-内容" class="headerlink" title="获取字典中的数据(内容)"></a>获取字典中的数据(内容)</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">characters[<span class="number">3</span>]  <span class="comment">// key为3的value</span></span><br><span class="line">characters[<span class="number">1</span>] = <span class="string">"A"</span>  <span class="comment">// 将key为1的value赋值为A</span></span><br><span class="line">characters[<span class="number">0</span>] = <span class="literal">nil</span>  <span class="comment">// 将key为0的value赋值为nil(即清除这个键值对)</span></span><br><span class="line">characters  <span class="comment">// 获取字典</span></span><br></pre></td></tr></table></figure>
+<h2 id="属性-amp-方法-amp-常用操作-1"><a href="#属性-amp-方法-amp-常用操作-1" class="headerlink" title="属性&amp;方法&amp;常用操作"></a>属性&amp;方法&amp;常用操作</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">characters.keys  <span class="comment">// 获取所有key值，返回一个数组</span></span><br><span class="line">characters.keys.sorted()  <span class="comment">// 获取所有key值，返回一个排序后的数组</span></span><br><span class="line">characters.values  <span class="comment">// 获取所有value值，返回一个数组</span></span><br><span class="line">characters.index(forKey: <span class="number">2</span>)  <span class="comment">// 获取key的序列，返回Dictionary&lt;Key, Value&gt;.Index</span></span><br><span class="line">characters.first  <span class="comment">// 获取字典的第一个键值对，返回元组</span></span><br><span class="line">characters.<span class="built_in">min</span>(by: &gt;)  <span class="comment">// 获取字典key排序后的第一个键值对，返回元组</span></span><br><span class="line">characters.<span class="built_in">max</span>(by: &gt;)  <span class="comment">// 获取字典key排序后的第一个键值对，返回元组</span></span><br><span class="line">characters.forEach &#123;  <span class="comment">// 遍历字典</span></span><br><span class="line">word <span class="keyword">in</span></span><br><span class="line"><span class="built_in">print</span>(word)</span><br><span class="line">&#125;</span><br><span class="line">characters.<span class="built_in">count</span>  <span class="comment">// 获取字典元素个数</span></span><br><span class="line">characters.isEmpty  <span class="comment">// 判空</span></span><br><span class="line">characters.updateValue(<span class="string">"F"</span>, forKey: <span class="number">6</span>)  <span class="comment">// 更新字典，如果有则替代，否则新增，并返回新的value</span></span><br><span class="line">characters.removeValue(forKey: <span class="number">6</span>)  <span class="comment">// 移除key为6的键值对，如果有则返回移除的value，否则是nil</span></span><br><span class="line"><span class="keyword">var</span> dictionary = [<span class="string">"a"</span>: <span class="number">1</span>, <span class="string">"b"</span>: <span class="number">2</span>]</span><br><span class="line">dictionary.merge([<span class="string">"a"</span>: <span class="number">3</span>, <span class="string">"c"</span>: <span class="number">4</span>]) &#123; (current, <span class="number">_</span>) <span class="keyword">in</span> current &#125;</span><br><span class="line"><span class="comment">// 更新字典，如果有重复的，保留原有的key和value</span></span><br><span class="line">dictionary.merge([<span class="string">"a"</span>: <span class="number">5</span>, <span class="string">"d"</span>: <span class="number">6</span>]) &#123; (<span class="number">_</span>, new) <span class="keyword">in</span> new &#125;</span><br><span class="line"><span class="comment">// 更新字典，如果有重复的，更新旧的value</span></span><br><span class="line"><span class="keyword">for</span> (name,path) <span class="keyword">in</span> characters &#123;  <span class="comment">// 遍历字典</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\(name) and \(path)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> letters = <span class="string">"abracadabra"</span></span><br><span class="line"><span class="keyword">let</span> letterCount = letters.<span class="built_in">reduce</span>(into: [:]) &#123; counts, letter <span class="keyword">in</span></span><br><span class="line">counts[letter, <span class="keyword">default</span>: <span class="number">0</span>] += <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 统计字母频率</span></span><br><span class="line"><span class="keyword">let</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="keyword">let</span> numberSum = numbers.<span class="built_in">reduce</span>(<span class="number">0</span>, &#123; x, y <span class="keyword">in</span></span><br><span class="line">x + y</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 求数组元素和</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Data Structures</category>
+        <category>Swift</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+        <tag>数据结构</tag>
+        <tag>Data Structures</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>周二实验剧场：搭建个人Leanote云笔记本</title>
+    <url>/2019/02/27/Tuesday-lab-leanote/</url>
+    <content><![CDATA[<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>操作计算机</th>
+<th>服务器计算机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>MacBookPro</td>
+<td>阿里云服务器ECS</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel i5-8259U</td>
+<td>1核</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>8192MiB</td>
+<td>2 GB</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>macOS Mojave 10.14.3</td>
+<td>CentOS 7.3 64位</td>
+</tr>
+<tr>
+<td>信息来源</td>
+<td>neofetch</td>
+<td>阿里云云服务器管理控制台</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>搭建个人Leanote云笔记本</p>
+<p>文章内容<a href="https://cloud.tencent.com/developer/labs/lab/10171" target="_blank" rel="noopener">来自</a><strong>腾讯云 开发者实验室</strong>——<strong>搭建个人Leanote云笔记本</strong></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="准备MongoDB"><a href="#准备MongoDB" class="headerlink" title="准备MongoDB"></a>准备MongoDB</h1><p>Leanote依赖MongoDB作为数据储存。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先应该<a href="https://docs.mongodb.com/manual/installation/#mongodb-supported-platforms" target="_blank" rel="noopener">查看</a>使用的服务器的操作系统是否是MongoDB支持的平台。</p>
+<p>然后选择相应的方式安装MongoDB至你的服务器。</p>
+<p>笔者由于是CentOS的操作系统，因此没什么兼容问题。</p>
+<p>笔者选择上传MongoDB的源文件。</p>
+<p>具体操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[下载] --&gt; B[解压]</span><br><span class="line">B --&gt; C((上传))</span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --bind_ip localhost --port 27017 --dbpath /data/db/ --logpath=/var/<span class="built_in">log</span>/mongod.log --fork</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里笔者在/home路径下新建了一个data文件夹，然后在/data/home路径下新建了db文件夹。</p>
+</blockquote>
+<hr>
+<h1 id="安装Leanote"><a href="#安装Leanote" class="headerlink" title="安装Leanote"></a>安装Leanote</h1><p><a href="https://leanote.com" target="_blank" rel="noopener">Leanote</a>在<a href="https://github.com/leanote/leanote" target="_blank" rel="noopener">Github</a>上开源，相关内容可以点击查看。</p>
+<p>那么开始安装：</p>
+<p>由于笔者已经在服务器上配置过ftp了，那么这里选择手动上传<a href="http://leanote.org/#download" target="_blank" rel="noopener">安装包</a>的方式。</p>
+<p>亦可以从<a href="https://github.com/leanote/leanote/wiki/Leanote-source-installation-on-Mac-and-Linux-(En" target="_blank" rel="noopener">Github</a>)上找到使用源的安装方式。</p>
+<p>具体操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[下载] --&gt; B[解压]</span><br><span class="line">B --&gt; C((上传))</span><br></pre></td></tr></table></figure>
+<h2 id="配置Leanote"><a href="#配置Leanote" class="headerlink" title="配置Leanote"></a>配置Leanote</h2><h3 id="设置配置文件"><a href="#设置配置文件" class="headerlink" title="设置配置文件"></a>设置配置文件</h3><p>确保在Leanote安装目录下，键入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim leanote/conf/appconf</span><br></pre></td></tr></table></figure>
+<p>修改<code>app.secret=</code>这一项，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">app.secret=qcloud666</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>根据Leanote官方的要求，这里需要自定义设置来保障安全。</p>
+</blockquote>
+<h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><p>确保在Leanote安装目录下，键入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongorestore -h localhost -d leanote --dir /home/leanote/mongodb_backup/leanote_install_data/</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其中dir的位置必须对应绝对位置</p>
+</blockquote>
+<hr>
+<h1 id="启动Leanote"><a href="#启动Leanote" class="headerlink" title="启动Leanote"></a>启动Leanote</h1><h2 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h2><p>在Leanote的bin目录下，键入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bash run.sh</span><br></pre></td></tr></table></figure>
+<p>出现：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ Listening on.. 0.0.0.0:9000</span><br></pre></td></tr></table></figure>
+<p>则启动成功。</p>
+<p>只要在服务器安全组和防火墙开放9000端口就可以正常访问了。</p>
+<h2 id="外网连接"><a href="#外网连接" class="headerlink" title="外网连接"></a>外网连接</h2><p>购买域名并添加地址映射或者直接使用IP地址访问服务器，记得添加端口号。</p>
+]]></content>
+      <categories>
+        <category>周二实验剧场</category>
+        <category>APP</category>
+      </categories>
+      <tags>
+        <tag>周二实验剧场</tag>
+        <tag>APP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SCNMaterial</title>
     <url>/2018/12/10/SCNMaterial/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>当创建一个材质时，定义了一组可视化属性和它们的选项，然后您可以将它们用于场景中的多个几何图形。<br>一个材质有几个视觉属性，每个属性都定义了SceneKit光照和阴影处理的不同部分。每个可视化属性都是SCNMaterialProperty类的一个实例，该类为SceneKit的呈现提供了一个纯色、纹理或其他2D内容。然后，材质的lightingModel属性确定SceneKit用于将视觉属性与场景中的灯光组合在一起的公式，从而为渲染场景中的每个像素生成最终颜色。有关呈现过程的更多细节，请参见SCNMaterial.LightingModel。<br>使用SCNGeometry类的firstMaterial或materials属性将一个或多个材料附加到它的实例。多个几何图形可以引用相同的材料。在这种情况下，改变材质的属性会改变使用它的每个几何图形的外观。</p>
@@ -501,6 +622,180 @@ z\\
       </tags>
   </entry>
   <entry>
+    <title>SCNMaterialProperty</title>
+    <url>/2018/12/11/SCNMaterialProperty/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>用于储存显示一种材料的视觉特性的颜色或纹理的容器</p>
+<p>一种材料有几个视觉特性，共同决定了它在光照和阴影下的外观。SceneKit通过将来自材质属性的信息与灯光的位置、强度和颜色相结合来呈现场景中的每个像素。</p>
+<p>材质属性的内容可以是一种颜色，它提供了横跨材质表面的统一效果；也可以是一种纹理，SceneKit使用材质所附的几何对象提供的纹理坐标，将其映射到材质表面。反过来，纹理可以来自任何的几个来源，如图像对象、一个图像文件的URL、一套专门格式的图像或图像作为一个立方体地图、甚至动画内容核心提供的动画、SpriteKit、或AVFoundation-for全部选项，请参阅contents属性。</p>
+<blockquote>
+<p>内容均翻译自 <a href="https://developer.apple.com/documentation" target="_blank" rel="noopener">apple developer documentation</a></p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
+<p>通常，在使用第三方创作工具创建3D资产时，您将纹理图像与材料相关联，而包含这些资产的场景文件引用外部图像文件。为了在应用程序包中传递资产时获得最好的结果，将场景文件放置在扩展名为.scnassets的文件夹中，并将作为这些场景纹理引用的图像文件放置在资产目录中。<br>然后Xcode优化场景和纹理资源，以便在每个目标设备上获得最佳性能，并为交付特性(如应用程序细化和按需资源)准备纹理资源。</p>
+</blockquote>
+<p>SceneKit以不同的方式为材质的每个可视属性使用材质属性的contents对象。例如:</p>
+<p>当你为漫反射属性提供一种颜色时，它决定了材质的基本颜色几何图形，当材质被白光照射时，它会以这种颜色的渐变出现阴影。如果您提供一个图像，SceneKit将图像映射到几何图形的表面，而不是使用统一的底色进行着色。</p>
+<p>当您为高光属性提供一种颜色时，它会影响从使用该材料的几何图形表面直接反射到查看器的光的颜色。如果你提供一个灰度图像，它决定了材料的趋势，以反射光直接向观众在图像中较亮的像素，使这些区域的材料显得更闪亮，和较暗的像素使材料显得更哑光。</p>
+<p>法线属性指定表面在每个点的方向。默认情况下，材质是均匀光滑的，因此为这个属性指定颜色没有任何用处。相反，您可以为该属性指定一个描述曲面轮廓的图像。SceneKit在照明中使用了这张图像(称为法线贴图)，创建了一个复杂的、凹凸不平的表面的错觉，而不会增加几何图形的复杂性。</p>
+<p>有关每个可视化属性及其内容如何影响材料外观的详细信息，请参见SCNMaterial。</p>
+<p>SceneKit还在其他地方使用SCNMaterialProperty对象:</p>
+<p>为了提供要在场景后呈现的内容，在SCNScene对象的后台属性中，</p>
+<p>在SCNLight对象的gobo属性中，影响光源照明的颜色和形状。</p>
+<p>在符合SCNShadable协议的类中，将纹理采样器绑定到自定义GLSL着色器源代码片段。</p>
+<hr>
+<h1 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h1><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">convenience</span> <span class="keyword">init</span>(contents: <span class="type">Any</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="处理物理性质的信息"><a href="#处理物理性质的信息" class="headerlink" title="处理物理性质的信息"></a>处理物理性质的信息</h1><blockquote>
+<p>Working with Material Property Contents</p>
+</blockquote>
+<h2 id="contents"><a href="#contents" class="headerlink" title="contents"></a>contents</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> contents: <span class="type">Any</span>? &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>对于每个可视化属性及其内容如何影响材料外观，请参见SCNMaterial<br>contents的内容可以是下列的任意一种：</p>
+<ul>
+<li>颜色 (NSColor/UIColor or CGColor)，指定材料表面的统一颜色</li>
+<li>数字 (NSNumber)，为材料的表面指定一个统一的标量值(用于基于物理的属性，如金属度-metalness)</li>
+<li>图片 (NSImage/UIImage or CGImage)，指定要映射到材质表面的纹理</li>
+<li>指定图像文件位置的NSString或NSURL对象</li>
+<li>视频播放器(AVPlayer)或实时视频捕捉预览(AVCaptureDevice，仅限iOS)</li>
+<li>Core Animation 层 (CALayer)</li>
+<li>纹理 (SKTexture, MDLTexture, MTLTexture, or GLKTextureInfo)</li>
+<li>SpriteKit场景(SKScene)</li>
+<li>一种特殊格式的图像或由六个图像组成的数组，用于指定立方体映射的面</li>
+</ul>
+<p>当您检查从文件中加载的场景元素时，这个值总是一个color对象(根据平台，是NSColor或UIColor类的)或一个image对象(根据平台，是NSImage或UIImage类的)。因此，您可以使用类型自省(Objective-C中的isKind(of:)方法，或者Swift中的is操作符或let-as匹配)来确定material属性内容的类型。</p>
+<h3 id="Using-Animated-Content"><a href="#Using-Animated-Content" class="headerlink" title="Using Animated Content"></a>Using Animated Content</h3><p>在ios11中，你可以使用AVCaptureDevice对象作为一个材质属性来预览来自捕获设备的实时视频。在ios11、tvos11和macOS 10.13中，您可以使用AVPlayer对象作为视频播放的材料属性。</p>
+<p>您可以指定任何核心动画层作为material属性的内容，例如具有动画子层层次结构的层。SceneKit不能使用已经在其他地方显示的层(例如，UIView对象的支持层)。</p>
+<p>您可以使用SpriteKit框架为material属性提供静态或动画内容。SpriteKit提供了生成和修改纹理图像的选项，例如generatingNormalMap()方法。您还可以使用整个动画SpriteKit场景作为材质属性的内容。当您使用SKTexture对象作为材质属性的内容时，wrapS、wrapT、contentsTransform、minificationFilter、magniationfilter和mipFilter属性将自动更新，以匹配SpriteKit纹理的相应特性。</p>
+<p>如果当前内容是纯色，则可以使用显式或隐式动画(请参见Animating SceneKit内容)更改为另一种颜色，从而创建在两种颜色之间淡入的效果。使用动画从其他内容类型转换到其他内容类型会导致瞬时转换——对于纹理内容类型(或者本身就是动画的类型)之间的动画转换，创建一个着色器修饰符(参见SCNShadable)。</p>
+<h3 id="Using-Cube-Map-Texures"><a href="#Using-Cube-Map-Texures" class="headerlink" title="Using Cube Map Texures"></a>Using Cube Map Texures</h3><p>SceneKit仅支持用于材质的反射属性或场景背景或lightingEnvironment属性的立方体映射。您可以以下表中描述的任何一种方式提供多维数据集映射。在这些格式中，垂直条提供了最好的性能，因为它匹配SceneKit用于呈现立方体纹理的内存布局。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Image Size Requirements</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vertical strip (single image)</td>
+<td>height == 6 * width</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_column_2x_e2dc2b5c-52c2-4c85-8ce0-9f07ff4f01c4.png" alt="img"></td>
+</tr>
+<tr>
+<td>Horizontal strip (single image)</td>
+<td>6 * height == width</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_row_2x_fc38741d-bcd9-4c53-9854-6077c3ea9635.png" alt="img"></td>
+</tr>
+<tr>
+<td>Spherical projection (single image)<br>(pixel x/y positions map to latitude/longitude coordinates on a sphere)</td>
+<td>2 * height == width</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_latlong_2x_54c3929d-ac29-4a27-b78b-0097e31fddfb.png" alt="img"></td>
+</tr>
+<tr>
+<td>Array of six images<br>(face order: +X, -X, +Y, -Y, +Z, -Z)</td>
+<td>height == width<br>same size for all images</td>
+<td>[<img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_1_2x_c94df0c7-ab3c-40f9-bd74-909ea31aee6a-20181210232114500.png" alt="img"> \</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_2_2x_c1495ba2-d942-47f8-a5ca-b8c0cd572337-20181210232200247.png" alt="img"> \</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_3_2x_f061c6dc-ee6b-464e-a9ca-cbb1481a4af3-20181210232222920.png" alt="img"> \</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_4_2x_3ff87a0a-f5a2-4428-a2e4-ba957aa20a1e-20181210232234104.png" alt="img"> \</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_5_2x_01471007-ccce-46e8-8e79-b09d569fb8ab-20181210232242931.png" alt="img"> \</td>
+<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_6_2x_0fbe1e8c-b044-43eb-8ea8-fdd7f2c9c189-20181210232251622.png" alt="img">]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="intensity"><a href="#intensity" class="headerlink" title="intensity"></a>intensity</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> intensity: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>默认强度是1.0。降低强度会淡出材质属性的内容，根据所代表的SCNMaterial对象的视觉属性，会产生不同的效果:</p>
+<p>对于法向特性，强度改变法向映射表面的表观粗糙度。降低强度使表面看起来更光滑。</p>
+<p>对于倍增特性，降低强度将材料特性的颜色与白色混合，有效降低了颜色倍增效应的强度。</p>
+<p>对于所有其他性能，降低强度会降低材料性能的含量。</p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<hr>
+<h1 id="配置纹理映射属性"><a href="#配置纹理映射属性" class="headerlink" title="配置纹理映射属性"></a>配置纹理映射属性</h1><blockquote>
+<p>配置纹理映射属性</p>
+</blockquote>
+<h2 id="var-contentsTransform-SCNMatrix4"><a href="#var-contentsTransform-SCNMatrix4" class="headerlink" title="var contentsTransform: SCNMatrix4"></a>var contentsTransform: SCNMatrix4</h2><blockquote>
+<p>The transformation applied to the material property’s visual contents. Animatable.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> contentsTransform: <span class="type">SCNMatrix4</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>SceneKit将此转换应用于材质所附的几何对象提供的纹理坐标，然后使用得到的坐标映射材质属性在材质表面的内容。(如果material属性的contents对象是常量颜色，则此转换无效。)</p>
+<p>例如，您可以使用此属性来增长、偏移或旋转相对于材质表面的纹理，如下所示。</p>
+<p><img src="/2018/12/11/SCNMaterialProperty/22c269c6-f7ea-474a-a6bd-d7a49d88aa92.png" alt="img"></p>
+<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
+<h2 id="var-wrapS-SCNWrapMode"><a href="#var-wrapS-SCNWrapMode" class="headerlink" title="var wrapS: SCNWrapMode"></a>var wrapS: SCNWrapMode</h2><blockquote>
+<p>The wrapping behavior for the S texture coordinate.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> wrapS: <span class="type">SCNWrapMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。</p>
+<p>S纹理坐标测量纹理图像的水平轴，从图像左边缘的0.0增加到右边缘的1.0。</p>
+<p>默认的包装模式是SCNWrapMode.clamp。请参阅SCNWrapMode了解可用模式及其效果。</p>
+<h2 id="var-wrapT-SCNWrapMode"><a href="#var-wrapT-SCNWrapMode" class="headerlink" title="var wrapT: SCNWrapMode"></a>var wrapT: SCNWrapMode</h2><blockquote>
+<p>The wrapping behavior for the T texture coordinate.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> wrapT: <span class="type">SCNWrapMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。</p>
+<p>纹理坐标测量纹理图像的纵轴，从图像底部的0.0增加到顶部的1.0。</p>
+<p>默认的包装模式是SCNWrapMode.clamp。请参阅SCNWrapMode了解可用模式及其效果。</p>
+<h2 id="enum-SCNWrapMode"><a href="#enum-SCNWrapMode" class="headerlink" title="enum SCNWrapMode"></a>enum SCNWrapMode</h2><blockquote>
+<p>Modes to apply to texture wrapping, used by the <code>wrapT</code> and <code>wrapS</code> properties.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNWrapMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">clamp</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">coordinates</span> <span class="title">are</span> <span class="title">clamped</span> <span class="title">to</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0, <span class="title">inclusive</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> `<span class="title">repeat</span>`</span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">uses</span> <span class="title">only</span> <span class="title">the</span> <span class="title">fractional</span> <span class="title">part</span> <span class="title">of</span> <span class="title">texture</span> <span class="title">coordinates</span>, <span class="title">passing</span> <span class="title">through</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> (<span class="title">but</span> <span class="title">not</span> <span class="title">including</span>) 1.0.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">clampToBorder</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">uses</span> <span class="title">texture</span> <span class="title">colors</span> <span class="title">for</span> <span class="title">coordinates</span> <span class="title">in</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0 (<span class="title">inclusive</span>) <span class="title">and</span> <span class="title">the</span> <span class="title">material</span> <span class="title">property</span>’<span class="title">s</span> <span class="title">borderColor</span> <span class="title">value</span> <span class="title">otherwise</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">mirror</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">of</span> <span class="title">texture</span> <span class="title">coordinates</span> <span class="title">outside</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0 <span class="title">should</span> <span class="title">behave</span> <span class="title">as</span> <span class="title">if</span> <span class="title">the</span> <span class="title">range</span> <span class="title">reverses</span> <span class="title">before</span> <span class="title">repeating</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
+<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。下图显示了每种包装模式对其他相同材料的影响。</p>
+<p><img src="/2018/12/11/SCNMaterialProperty/a708d857-d063-472e-96ca-70976eb62c49.png" alt="img"></p>
+<h2 id="var-minificationFilter-SCNFilterMode"><a href="#var-minificationFilter-SCNFilterMode" class="headerlink" title="var minificationFilter: SCNFilterMode"></a>var minificationFilter: SCNFilterMode</h2><blockquote>
+<p>Texture filtering for rendering the material property’s image contents at a size smaller than that of the original image.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> minificationFilter: <span class="type">SCNFilterMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="var-magnificationFilter-SCNFilterMode"><a href="#var-magnificationFilter-SCNFilterMode" class="headerlink" title="var magnificationFilter: SCNFilterMode"></a>var magnificationFilter: SCNFilterMode</h2><blockquote>
+<p>Texture filtering for rendering the material property’s image contents at a size larger than that of the original image.</p>
+</blockquote>
+<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，纹理坐标在远离摄像机的一点可能对应于纹理图像中几个像素的区域。SceneKit使用缩小过滤器来确定采样texel在该点的颜色。</p>
+<p>默认的缩小过滤器是scnfilter.linear。请参阅SCNWrapMode了解可用模式及其效果。</p>
+<h2 id="var-mipFilter-SCNFilterMode"><a href="#var-mipFilter-SCNFilterMode" class="headerlink" title="var mipFilter: SCNFilterMode"></a>var mipFilter: SCNFilterMode</h2><blockquote>
+<p>Texture filtering for using mipmaps to render the material property’s image contents at a size smaller than that of the original image.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> magnificationFilter: <span class="type">SCNFilterMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，在摄像机附近的一个点上的纹理坐标可能对应于纹理图像中像素的一小部分。SceneKit使用放大过滤器来确定采样texel在该点的颜色。</p>
+<p>默认的放大过滤器是scnfilter.linear。请参阅SCNWrapMode了解可用模式及其效果。</p>
+<h2 id="enum-SCNFilterMode"><a href="#enum-SCNFilterMode" class="headerlink" title="enum SCNFilterMode"></a>enum SCNFilterMode</h2><blockquote>
+<p>Texture filtering modes, used by the <code>minificationFilter</code>,<code>magnificationFilter</code>, and <code>mipFilter</code> properties.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNFilterMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">none</span></span></span><br><span class="line"><span class="class">//<span class="title">No</span> <span class="title">texture</span> <span class="title">filtering</span> <span class="title">is</span> <span class="title">applied</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">nearest</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">filtering</span> <span class="title">returns</span> <span class="title">the</span> <span class="title">color</span> <span class="title">from</span> <span class="title">only</span> <span class="title">one</span> <span class="title">texel</span>, <span class="title">whose</span> <span class="title">location</span> <span class="title">is</span> <span class="title">nearest</span> <span class="title">to</span> <span class="title">the</span> <span class="title">coordinates</span> <span class="title">being</span> <span class="title">sampled</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">linear</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">filtering</span> <span class="title">sample</span> <span class="title">texels</span> <span class="title">from</span> <span class="title">the</span> <span class="title">neighborhood</span> <span class="title">of</span> <span class="title">the</span> <span class="title">coordinates</span> <span class="title">being</span> <span class="title">sampled</span> <span class="title">and</span> <span class="title">linearly</span> <span class="title">interpolates</span> <span class="title">their</span> <span class="title">colors</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
+<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，当纹理被应用到一个远离相机的平面上时:</p>
+<p>在相机附近的一个点的纹理坐标可以对应原始图像中一个像素的一小部分。SceneKit使用放大率过滤器属性来确定采样后的texel的颜色。</p>
+<p>纹理坐标在远离摄像机的一点可能对应于原始图像中几个像素的区域。SceneKit使用minificationFilter属性来确定采样texel的颜色。</p>
+<p>SceneKit还在为纹理图像生成mipmap级别时使用mipFilter属性指定的过滤器。</p>
+<h2 id="var-maxAnisotropy-CGFloat"><a href="#var-maxAnisotropy-CGFloat" class="headerlink" title="var maxAnisotropy: CGFloat"></a>var maxAnisotropy: CGFloat</h2><blockquote>
+<p>The amount of anisotropic texture filtering to be used when rendering the material property’s image contents.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> maxAnisotropy: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>各向异性滤波是一种提高纹理呈现质量的过程，当纹理表面出现一个相对于相机的极端角度。这个过程通过从纹理的多个mipmap级别对每个呈现的像素进行采样来完成——各向异性是指每个像素的采样数量。各向异性越高，渲染质量越好，但渲染性能越差。</p>
+<p>例如，下图左边的图像没有使用各向异性滤波，导致在棋盘模式后退到一定距离时呈现工件。其他图像使用更高的maxAnisotropy值，减少了呈现伪影。各向异性滤波需要mipmap，因此只有当mipFilter属性的值不是scnfilter.none时，该属性才生效。</p>
+<p><img src="/2018/12/11/SCNMaterialProperty/5a2465a2-a8ab-42ae-9f73-bf6c1af20af2.png" alt="img"></p>
+<p>SceneKit会根据需要自动增加或减少每个渲染像素的各向异性，以最大限度地提高渲染质量，直到该属性指定的限制。绘制时所使用的最大各向异性电平取决于所使用的图形硬件。将此属性的值设置为MAXFLOAT常量(默认值)，以使用GPU支持的最高各向异性级别。最大各向异性值为1.0或更低将禁用各向异性过滤。</p>
+<h2 id="var-mappingChannel-Int"><a href="#var-mappingChannel-Int" class="headerlink" title="var mappingChannel: Int"></a>var mappingChannel: Int</h2><blockquote>
+<p>The source of texture coordinates for mapping the material property’s image contents.</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mappingChannel: <span class="type">Int</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>一个几何图形可以有多个独立的纹理坐标来源，每个来源都定义一个唯一的映射通道号。您可以使用这些通道以不同的方式映射材料的不同视觉属性。例如，表示图片框的几何图形可以使用一组纹理坐标来映射图片本身的材质，而另一组纹理坐标可以将图片放到图片框中。</p>
+<p>有关使用多个纹理映射通道创建几何图形的信息，请参见SCNGeometry。</p>
+<hr>
+]]></content>
+      <categories>
+        <category>Swift</category>
+        <category>SceneKit</category>
+        <category>SCNMaterialProperty</category>
+      </categories>
+      <tags>
+        <tag>Swift</tag>
+        <tag>SceneKit</tag>
+        <tag>SCNMaterialProperty</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何书写一份 PlaygroundBook (2)</title>
     <url>/2020/05/14/HackthePlaygroundBook-2/</url>
     <content><![CDATA[<blockquote>
@@ -733,301 +1028,6 @@ z\\
       <tags>
         <tag>Swift</tag>
         <tag>PlaygroundBook</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Data Structures in Swift — Standard Library</title>
-    <url>/2018/12/12/Data-Structures-in-Swift/</url>
-    <content><![CDATA[<h1 id="Standard-Library"><a href="#Standard-Library" class="headerlink" title="Standard Library"></a>Standard Library</h1><p>在深入学习数据结构之前，首先将看到一些Swift中的基础数据结构。Swift标准库是指定义Swift语言核心组件的框架。在里面，你会发现各种各样的工具和类型，以帮助建立Swift应用程序。<br>在本篇，将重点介绍标准库直接提供的两个数据结构:数组和字典。</p>
-<blockquote>
-<p>内容源于：By Matthijs Hollemans. “Data Structures &amp; Algorithms in Swift”. Apple Books.<br><a id="more"></a></p>
-</blockquote>
-<h1 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h1><h2 id="创建-声明-一个数组"><a href="#创建-声明-一个数组" class="headerlink" title="创建(声明)一个数组"></a>创建(声明)一个数组</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="type">Number</span> = [<span class="type">Int</span>]()  <span class="comment">// 声明一个空数组</span></span><br><span class="line"><span class="keyword">var</span> fibonacci:[<span class="type">Int</span>] = []  <span class="comment">// 同，声明一个空数组</span></span><br><span class="line"><span class="keyword">var</span> fibonacciNumber = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">13</span>,<span class="number">21</span>,<span class="number">34</span>]  <span class="comment">// 声明一个数组，元素类型是Int</span></span><br></pre></td></tr></table></figure>
-<p>注：数组的声明，必须包含两点——用以表示数组的标识和数组元素的类型，其中元素类型决定了所有元素的统一类型，同时swift可以自行推断数据类型</p>
-<h2 id="获取数组中的数据-内容"><a href="#获取数组中的数据-内容" class="headerlink" title="获取数组中的数据(内容)"></a>获取数组中的数据(内容)</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">fibonacciNumber[<span class="number">4</span>]  <span class="comment">// 获取数组的第五个元素，数组以0为第一个的标记</span></span><br><span class="line">fibonacciNumber[<span class="number">0</span>] = <span class="number">1</span>  <span class="comment">// 将第一个元素赋值为1</span></span><br><span class="line">fibonacciNumber[<span class="number">0</span>...<span class="number">3</span>] = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  <span class="comment">// 将首四个元素赋值</span></span><br><span class="line">fibonacciNumber  <span class="comment">// 获取数组本身</span></span><br></pre></td></tr></table></figure>
-<h2 id="属性-amp-方法-amp-常用操作"><a href="#属性-amp-方法-amp-常用操作" class="headerlink" title="属性&amp;方法&amp;常用操作"></a>属性&amp;方法&amp;常用操作</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">fibonacciNumber.<span class="built_in">count</span>  <span class="comment">// 获取数组的元素个数</span></span><br><span class="line">fibonacci.isEmpty  <span class="comment">// 判断数组是否为空</span></span><br><span class="line">fibonacciNumber.isEmpty  <span class="comment">// 判断数组是否为空</span></span><br><span class="line">fibonacciNumber.<span class="built_in">contains</span>(<span class="number">4</span>)  <span class="comment">// 判断数组是否包含某个元素</span></span><br><span class="line">fibonacciNumber.first  <span class="comment">// 获取数组第一个元素</span></span><br><span class="line">fibonacciNumber.last  <span class="comment">// 获取数组最后一个元素</span></span><br><span class="line">fibonacciNumber.removeFirst()  <span class="comment">// 移除第一个元素，返回移除的元素</span></span><br><span class="line">fibonacciNumber.removeLast()  <span class="comment">// 移除最后一个元素，返回元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">min</span>()  <span class="comment">// 求出数组中最小的元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">min</span>(by: &gt;)  <span class="comment">// 求出数组中最小的元素，以'&gt;'规则</span></span><br><span class="line">fibonacciNumber.<span class="built_in">max</span>()  <span class="comment">// 求出数组中最大的元素</span></span><br><span class="line">fibonacciNumber.<span class="built_in">max</span>(by: &gt;)  <span class="comment">// 求出数组中最大的元素，以'&gt;'规则</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropFirst</span>()  <span class="comment">// 移除第一个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropLast</span>()  <span class="comment">// 移除最后一个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropLast</span>(<span class="number">2</span>)  <span class="comment">// 移除最后两个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">dropFirst</span>(<span class="number">2</span>)  <span class="comment">// 移除前两个元素，返回结果数组</span></span><br><span class="line">fibonacciNumber.forEach &#123; (word) <span class="keyword">in</span>  <span class="comment">// 遍历数组，每次读取的结果以word指代</span></span><br><span class="line"><span class="built_in">print</span>(word)</span><br><span class="line">&#125;</span><br><span class="line">fibonacciNumber.append(<span class="number">55</span>)  <span class="comment">// 在数组尾添加元素55</span></span><br><span class="line">fibonacciNumber += [<span class="number">89</span>]  <span class="comment">// 在数组尾添加元素89</span></span><br><span class="line">fibonacciNumber.insert(<span class="number">0</span>, at: <span class="number">0</span>)  <span class="comment">// 在数组序列为0的位置插入0</span></span><br><span class="line">fibonacciNumber.remove(at: <span class="number">0</span>)  <span class="comment">// 移除数组序列为0的元素</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> fibonacciNumber &#123;  <span class="comment">// 遍历数组，每次读取的结果以item指代</span></span><br><span class="line"><span class="built_in">print</span>(item)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (index,value) <span class="keyword">in</span> fibonacciNumber.enumerated()&#123;  </span><br><span class="line"><span class="comment">// 元组遍历字典，字典由数组元素和其序列合成</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\(index+1) and \(value)"</span>)</span><br><span class="line">&#125;</span><br><span class="line">fibonacciNumber.<span class="built_in">sort</span>(by : &gt;)  <span class="comment">// 原地排序数组，数组本身被更改，'&gt;'为规则 </span></span><br><span class="line">fibonacciNumber.sorted()  <span class="comment">// 为数组排序，返回结果，不更改自身</span></span><br><span class="line">fibonacciNumber.reversed()  <span class="comment">// 反转数组</span></span><br><span class="line">fibonacciNumber.<span class="built_in">distance</span>(from: <span class="number">1</span>, to: <span class="number">4</span>)  <span class="comment">// 获取距离</span></span><br></pre></td></tr></table></figure>
-<h1 id="Dictionary"><a href="#Dictionary" class="headerlink" title="Dictionary"></a>Dictionary</h1><h2 id="创建-声明-一个字典"><a href="#创建-声明-一个字典" class="headerlink" title="创建(声明)一个字典"></a>创建(声明)一个字典</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> character = [<span class="type">Int</span>:<span class="type">String</span>]()</span><br><span class="line"><span class="keyword">var</span> letter:[<span class="type">Int</span>:<span class="type">String</span>] = [:]</span><br><span class="line"><span class="keyword">var</span> characters = [</span><br><span class="line"><span class="number">1</span>:<span class="string">"R"</span>,</span><br><span class="line"><span class="number">2</span>:<span class="string">"B"</span>,</span><br><span class="line"><span class="number">3</span>:<span class="string">"C"</span>,</span><br><span class="line"><span class="number">4</span>:<span class="string">"D"</span>,</span><br><span class="line"><span class="number">5</span>:<span class="string">"E"</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>注：字典的声明，必须包含三点——用以表示字典的标识以及key值和value值的类型，其中key值和value值的类型决定了相应部分的统一类型，同时swift可以自行推断数据类型</p>
-<h2 id="获取字典中的数据-内容"><a href="#获取字典中的数据-内容" class="headerlink" title="获取字典中的数据(内容)"></a>获取字典中的数据(内容)</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">characters[<span class="number">3</span>]  <span class="comment">// key为3的value</span></span><br><span class="line">characters[<span class="number">1</span>] = <span class="string">"A"</span>  <span class="comment">// 将key为1的value赋值为A</span></span><br><span class="line">characters[<span class="number">0</span>] = <span class="literal">nil</span>  <span class="comment">// 将key为0的value赋值为nil(即清除这个键值对)</span></span><br><span class="line">characters  <span class="comment">// 获取字典</span></span><br></pre></td></tr></table></figure>
-<h2 id="属性-amp-方法-amp-常用操作-1"><a href="#属性-amp-方法-amp-常用操作-1" class="headerlink" title="属性&amp;方法&amp;常用操作"></a>属性&amp;方法&amp;常用操作</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line">characters.keys  <span class="comment">// 获取所有key值，返回一个数组</span></span><br><span class="line">characters.keys.sorted()  <span class="comment">// 获取所有key值，返回一个排序后的数组</span></span><br><span class="line">characters.values  <span class="comment">// 获取所有value值，返回一个数组</span></span><br><span class="line">characters.index(forKey: <span class="number">2</span>)  <span class="comment">// 获取key的序列，返回Dictionary&lt;Key, Value&gt;.Index</span></span><br><span class="line">characters.first  <span class="comment">// 获取字典的第一个键值对，返回元组</span></span><br><span class="line">characters.<span class="built_in">min</span>(by: &gt;)  <span class="comment">// 获取字典key排序后的第一个键值对，返回元组</span></span><br><span class="line">characters.<span class="built_in">max</span>(by: &gt;)  <span class="comment">// 获取字典key排序后的第一个键值对，返回元组</span></span><br><span class="line">characters.forEach &#123;  <span class="comment">// 遍历字典</span></span><br><span class="line">word <span class="keyword">in</span></span><br><span class="line"><span class="built_in">print</span>(word)</span><br><span class="line">&#125;</span><br><span class="line">characters.<span class="built_in">count</span>  <span class="comment">// 获取字典元素个数</span></span><br><span class="line">characters.isEmpty  <span class="comment">// 判空</span></span><br><span class="line">characters.updateValue(<span class="string">"F"</span>, forKey: <span class="number">6</span>)  <span class="comment">// 更新字典，如果有则替代，否则新增，并返回新的value</span></span><br><span class="line">characters.removeValue(forKey: <span class="number">6</span>)  <span class="comment">// 移除key为6的键值对，如果有则返回移除的value，否则是nil</span></span><br><span class="line"><span class="keyword">var</span> dictionary = [<span class="string">"a"</span>: <span class="number">1</span>, <span class="string">"b"</span>: <span class="number">2</span>]</span><br><span class="line">dictionary.merge([<span class="string">"a"</span>: <span class="number">3</span>, <span class="string">"c"</span>: <span class="number">4</span>]) &#123; (current, <span class="number">_</span>) <span class="keyword">in</span> current &#125;</span><br><span class="line"><span class="comment">// 更新字典，如果有重复的，保留原有的key和value</span></span><br><span class="line">dictionary.merge([<span class="string">"a"</span>: <span class="number">5</span>, <span class="string">"d"</span>: <span class="number">6</span>]) &#123; (<span class="number">_</span>, new) <span class="keyword">in</span> new &#125;</span><br><span class="line"><span class="comment">// 更新字典，如果有重复的，更新旧的value</span></span><br><span class="line"><span class="keyword">for</span> (name,path) <span class="keyword">in</span> characters &#123;  <span class="comment">// 遍历字典</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\(name) and \(path)"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> letters = <span class="string">"abracadabra"</span></span><br><span class="line"><span class="keyword">let</span> letterCount = letters.<span class="built_in">reduce</span>(into: [:]) &#123; counts, letter <span class="keyword">in</span></span><br><span class="line">counts[letter, <span class="keyword">default</span>: <span class="number">0</span>] += <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 统计字母频率</span></span><br><span class="line"><span class="keyword">let</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="keyword">let</span> numberSum = numbers.<span class="built_in">reduce</span>(<span class="number">0</span>, &#123; x, y <span class="keyword">in</span></span><br><span class="line">x + y</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 求数组元素和</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Data Structures</category>
-        <category>Swift</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-        <tag>数据结构</tag>
-        <tag>Data Structures</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>周二实验剧场：搭建个人Leanote云笔记本</title>
-    <url>/2019/02/27/Tuesday-lab-leanote/</url>
-    <content><![CDATA[<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>参数类型</th>
-<th>操作计算机</th>
-<th>服务器计算机</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类型</td>
-<td>MacBookPro</td>
-<td>阿里云服务器ECS</td>
-</tr>
-<tr>
-<td>CPU</td>
-<td>Intel i5-8259U</td>
-<td>1核</td>
-</tr>
-<tr>
-<td>Memory</td>
-<td>8192MiB</td>
-<td>2 GB</td>
-</tr>
-<tr>
-<td>OS</td>
-<td>macOS Mojave 10.14.3</td>
-<td>CentOS 7.3 64位</td>
-</tr>
-<tr>
-<td>信息来源</td>
-<td>neofetch</td>
-<td>阿里云云服务器管理控制台</td>
-</tr>
-</tbody>
-</table>
-</div>
-<blockquote>
-<p>搭建个人Leanote云笔记本</p>
-<p>文章内容<a href="https://cloud.tencent.com/developer/labs/lab/10171" target="_blank" rel="noopener">来自</a><strong>腾讯云 开发者实验室</strong>——<strong>搭建个人Leanote云笔记本</strong></p>
-</blockquote>
-<a id="more"></a>
-<h1 id="准备MongoDB"><a href="#准备MongoDB" class="headerlink" title="准备MongoDB"></a>准备MongoDB</h1><p>Leanote依赖MongoDB作为数据储存。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先应该<a href="https://docs.mongodb.com/manual/installation/#mongodb-supported-platforms" target="_blank" rel="noopener">查看</a>使用的服务器的操作系统是否是MongoDB支持的平台。</p>
-<p>然后选择相应的方式安装MongoDB至你的服务器。</p>
-<p>笔者由于是CentOS的操作系统，因此没什么兼容问题。</p>
-<p>笔者选择上传MongoDB的源文件。</p>
-<p>具体操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[下载] --&gt; B[解压]</span><br><span class="line">B --&gt; C((上传))</span><br></pre></td></tr></table></figure>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --bind_ip localhost --port 27017 --dbpath /data/db/ --logpath=/var/<span class="built_in">log</span>/mongod.log --fork</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里笔者在/home路径下新建了一个data文件夹，然后在/data/home路径下新建了db文件夹。</p>
-</blockquote>
-<hr>
-<h1 id="安装Leanote"><a href="#安装Leanote" class="headerlink" title="安装Leanote"></a>安装Leanote</h1><p><a href="https://leanote.com" target="_blank" rel="noopener">Leanote</a>在<a href="https://github.com/leanote/leanote" target="_blank" rel="noopener">Github</a>上开源，相关内容可以点击查看。</p>
-<p>那么开始安装：</p>
-<p>由于笔者已经在服务器上配置过ftp了，那么这里选择手动上传<a href="http://leanote.org/#download" target="_blank" rel="noopener">安装包</a>的方式。</p>
-<p>亦可以从<a href="https://github.com/leanote/leanote/wiki/Leanote-source-installation-on-Mac-and-Linux-(En" target="_blank" rel="noopener">Github</a>)上找到使用源的安装方式。</p>
-<p>具体操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[下载] --&gt; B[解压]</span><br><span class="line">B --&gt; C((上传))</span><br></pre></td></tr></table></figure>
-<h2 id="配置Leanote"><a href="#配置Leanote" class="headerlink" title="配置Leanote"></a>配置Leanote</h2><h3 id="设置配置文件"><a href="#设置配置文件" class="headerlink" title="设置配置文件"></a>设置配置文件</h3><p>确保在Leanote安装目录下，键入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vim leanote/conf/appconf</span><br></pre></td></tr></table></figure>
-<p>修改<code>app.secret=</code>这一项，如：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">app.secret=qcloud666</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>根据Leanote官方的要求，这里需要自定义设置来保障安全。</p>
-</blockquote>
-<h2 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h2><p>确保在Leanote安装目录下，键入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongorestore -h localhost -d leanote --dir /home/leanote/mongodb_backup/leanote_install_data/</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>其中dir的位置必须对应绝对位置</p>
-</blockquote>
-<hr>
-<h1 id="启动Leanote"><a href="#启动Leanote" class="headerlink" title="启动Leanote"></a>启动Leanote</h1><h2 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h2><p>在Leanote的bin目录下，键入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bash run.sh</span><br></pre></td></tr></table></figure>
-<p>出现：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ Listening on.. 0.0.0.0:9000</span><br></pre></td></tr></table></figure>
-<p>则启动成功。</p>
-<p>只要在服务器安全组和防火墙开放9000端口就可以正常访问了。</p>
-<h2 id="外网连接"><a href="#外网连接" class="headerlink" title="外网连接"></a>外网连接</h2><p>购买域名并添加地址映射或者直接使用IP地址访问服务器，记得添加端口号。</p>
-]]></content>
-      <categories>
-        <category>周二实验剧场</category>
-        <category>APP</category>
-      </categories>
-      <tags>
-        <tag>周二实验剧场</tag>
-        <tag>APP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SCNMaterialProperty</title>
-    <url>/2018/12/11/SCNMaterialProperty/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>用于储存显示一种材料的视觉特性的颜色或纹理的容器</p>
-<p>一种材料有几个视觉特性，共同决定了它在光照和阴影下的外观。SceneKit通过将来自材质属性的信息与灯光的位置、强度和颜色相结合来呈现场景中的每个像素。</p>
-<p>材质属性的内容可以是一种颜色，它提供了横跨材质表面的统一效果；也可以是一种纹理，SceneKit使用材质所附的几何对象提供的纹理坐标，将其映射到材质表面。反过来，纹理可以来自任何的几个来源，如图像对象、一个图像文件的URL、一套专门格式的图像或图像作为一个立方体地图、甚至动画内容核心提供的动画、SpriteKit、或AVFoundation-for全部选项，请参阅contents属性。</p>
-<blockquote>
-<p>内容均翻译自 <a href="https://developer.apple.com/documentation" target="_blank" rel="noopener">apple developer documentation</a></p>
-</blockquote>
-<a id="more"></a>
-<hr>
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
-<p>通常，在使用第三方创作工具创建3D资产时，您将纹理图像与材料相关联，而包含这些资产的场景文件引用外部图像文件。为了在应用程序包中传递资产时获得最好的结果，将场景文件放置在扩展名为.scnassets的文件夹中，并将作为这些场景纹理引用的图像文件放置在资产目录中。<br>然后Xcode优化场景和纹理资源，以便在每个目标设备上获得最佳性能，并为交付特性(如应用程序细化和按需资源)准备纹理资源。</p>
-</blockquote>
-<p>SceneKit以不同的方式为材质的每个可视属性使用材质属性的contents对象。例如:</p>
-<p>当你为漫反射属性提供一种颜色时，它决定了材质的基本颜色几何图形，当材质被白光照射时，它会以这种颜色的渐变出现阴影。如果您提供一个图像，SceneKit将图像映射到几何图形的表面，而不是使用统一的底色进行着色。</p>
-<p>当您为高光属性提供一种颜色时，它会影响从使用该材料的几何图形表面直接反射到查看器的光的颜色。如果你提供一个灰度图像，它决定了材料的趋势，以反射光直接向观众在图像中较亮的像素，使这些区域的材料显得更闪亮，和较暗的像素使材料显得更哑光。</p>
-<p>法线属性指定表面在每个点的方向。默认情况下，材质是均匀光滑的，因此为这个属性指定颜色没有任何用处。相反，您可以为该属性指定一个描述曲面轮廓的图像。SceneKit在照明中使用了这张图像(称为法线贴图)，创建了一个复杂的、凹凸不平的表面的错觉，而不会增加几何图形的复杂性。</p>
-<p>有关每个可视化属性及其内容如何影响材料外观的详细信息，请参见SCNMaterial。</p>
-<p>SceneKit还在其他地方使用SCNMaterialProperty对象:</p>
-<p>为了提供要在场景后呈现的内容，在SCNScene对象的后台属性中，</p>
-<p>在SCNLight对象的gobo属性中，影响光源照明的颜色和形状。</p>
-<p>在符合SCNShadable协议的类中，将纹理采样器绑定到自定义GLSL着色器源代码片段。</p>
-<hr>
-<h1 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h1><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">convenience</span> <span class="keyword">init</span>(contents: <span class="type">Any</span>)</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="处理物理性质的信息"><a href="#处理物理性质的信息" class="headerlink" title="处理物理性质的信息"></a>处理物理性质的信息</h1><blockquote>
-<p>Working with Material Property Contents</p>
-</blockquote>
-<h2 id="contents"><a href="#contents" class="headerlink" title="contents"></a>contents</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> contents: <span class="type">Any</span>? &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>对于每个可视化属性及其内容如何影响材料外观，请参见SCNMaterial<br>contents的内容可以是下列的任意一种：</p>
-<ul>
-<li>颜色 (NSColor/UIColor or CGColor)，指定材料表面的统一颜色</li>
-<li>数字 (NSNumber)，为材料的表面指定一个统一的标量值(用于基于物理的属性，如金属度-metalness)</li>
-<li>图片 (NSImage/UIImage or CGImage)，指定要映射到材质表面的纹理</li>
-<li>指定图像文件位置的NSString或NSURL对象</li>
-<li>视频播放器(AVPlayer)或实时视频捕捉预览(AVCaptureDevice，仅限iOS)</li>
-<li>Core Animation 层 (CALayer)</li>
-<li>纹理 (SKTexture, MDLTexture, MTLTexture, or GLKTextureInfo)</li>
-<li>SpriteKit场景(SKScene)</li>
-<li>一种特殊格式的图像或由六个图像组成的数组，用于指定立方体映射的面</li>
-</ul>
-<p>当您检查从文件中加载的场景元素时，这个值总是一个color对象(根据平台，是NSColor或UIColor类的)或一个image对象(根据平台，是NSImage或UIImage类的)。因此，您可以使用类型自省(Objective-C中的isKind(of:)方法，或者Swift中的is操作符或let-as匹配)来确定material属性内容的类型。</p>
-<h3 id="Using-Animated-Content"><a href="#Using-Animated-Content" class="headerlink" title="Using Animated Content"></a>Using Animated Content</h3><p>在ios11中，你可以使用AVCaptureDevice对象作为一个材质属性来预览来自捕获设备的实时视频。在ios11、tvos11和macOS 10.13中，您可以使用AVPlayer对象作为视频播放的材料属性。</p>
-<p>您可以指定任何核心动画层作为material属性的内容，例如具有动画子层层次结构的层。SceneKit不能使用已经在其他地方显示的层(例如，UIView对象的支持层)。</p>
-<p>您可以使用SpriteKit框架为material属性提供静态或动画内容。SpriteKit提供了生成和修改纹理图像的选项，例如generatingNormalMap()方法。您还可以使用整个动画SpriteKit场景作为材质属性的内容。当您使用SKTexture对象作为材质属性的内容时，wrapS、wrapT、contentsTransform、minificationFilter、magniationfilter和mipFilter属性将自动更新，以匹配SpriteKit纹理的相应特性。</p>
-<p>如果当前内容是纯色，则可以使用显式或隐式动画(请参见Animating SceneKit内容)更改为另一种颜色，从而创建在两种颜色之间淡入的效果。使用动画从其他内容类型转换到其他内容类型会导致瞬时转换——对于纹理内容类型(或者本身就是动画的类型)之间的动画转换，创建一个着色器修饰符(参见SCNShadable)。</p>
-<h3 id="Using-Cube-Map-Texures"><a href="#Using-Cube-Map-Texures" class="headerlink" title="Using Cube Map Texures"></a>Using Cube Map Texures</h3><p>SceneKit仅支持用于材质的反射属性或场景背景或lightingEnvironment属性的立方体映射。您可以以下表中描述的任何一种方式提供多维数据集映射。在这些格式中，垂直条提供了最好的性能，因为它匹配SceneKit用于呈现立方体纹理的内存布局。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>Description</th>
-<th>Image Size Requirements</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Vertical strip (single image)</td>
-<td>height == 6 * width</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_column_2x_e2dc2b5c-52c2-4c85-8ce0-9f07ff4f01c4.png" alt="img"></td>
-</tr>
-<tr>
-<td>Horizontal strip (single image)</td>
-<td>6 * height == width</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_row_2x_fc38741d-bcd9-4c53-9854-6077c3ea9635.png" alt="img"></td>
-</tr>
-<tr>
-<td>Spherical projection (single image)<br>(pixel x/y positions map to latitude/longitude coordinates on a sphere)</td>
-<td>2 * height == width</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_latlong_2x_54c3929d-ac29-4a27-b78b-0097e31fddfb.png" alt="img"></td>
-</tr>
-<tr>
-<td>Array of six images<br>(face order: +X, -X, +Y, -Y, +Z, -Z)</td>
-<td>height == width<br>same size for all images</td>
-<td>[<img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_1_2x_c94df0c7-ab3c-40f9-bd74-909ea31aee6a-20181210232114500.png" alt="img"> \</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_2_2x_c1495ba2-d942-47f8-a5ca-b8c0cd572337-20181210232200247.png" alt="img"> \</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_3_2x_f061c6dc-ee6b-464e-a9ca-cbb1481a4af3-20181210232222920.png" alt="img"> \</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_4_2x_3ff87a0a-f5a2-4428-a2e4-ba957aa20a1e-20181210232234104.png" alt="img"> \</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_5_2x_01471007-ccce-46e8-8e79-b09d569fb8ab-20181210232242931.png" alt="img"> \</td>
-<td><img src="/2018/12/11/SCNMaterialProperty/scenekitcubemap_6_2x_0fbe1e8c-b044-43eb-8ea8-fdd7f2c9c189-20181210232251622.png" alt="img">]</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="intensity"><a href="#intensity" class="headerlink" title="intensity"></a>intensity</h2><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> intensity: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>默认强度是1.0。降低强度会淡出材质属性的内容，根据所代表的SCNMaterial对象的视觉属性，会产生不同的效果:</p>
-<p>对于法向特性，强度改变法向映射表面的表观粗糙度。降低强度使表面看起来更光滑。</p>
-<p>对于倍增特性，降低强度将材料特性的颜色与白色混合，有效降低了颜色倍增效应的强度。</p>
-<p>对于所有其他性能，降低强度会降低材料性能的含量。</p>
-<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
-<hr>
-<h1 id="配置纹理映射属性"><a href="#配置纹理映射属性" class="headerlink" title="配置纹理映射属性"></a>配置纹理映射属性</h1><blockquote>
-<p>配置纹理映射属性</p>
-</blockquote>
-<h2 id="var-contentsTransform-SCNMatrix4"><a href="#var-contentsTransform-SCNMatrix4" class="headerlink" title="var contentsTransform: SCNMatrix4"></a>var contentsTransform: SCNMatrix4</h2><blockquote>
-<p>The transformation applied to the material property’s visual contents. Animatable.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> contentsTransform: <span class="type">SCNMatrix4</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>SceneKit将此转换应用于材质所附的几何对象提供的纹理坐标，然后使用得到的坐标映射材质属性在材质表面的内容。(如果material属性的contents对象是常量颜色，则此转换无效。)</p>
-<p>例如，您可以使用此属性来增长、偏移或旋转相对于材质表面的纹理，如下所示。</p>
-<p><img src="/2018/12/11/SCNMaterialProperty/22c269c6-f7ea-474a-a6bd-d7a49d88aa92.png" alt="img"></p>
-<p>您可以对该属性的值进行动画更改。参见Animating SceneKit Content</p>
-<h2 id="var-wrapS-SCNWrapMode"><a href="#var-wrapS-SCNWrapMode" class="headerlink" title="var wrapS: SCNWrapMode"></a>var wrapS: SCNWrapMode</h2><blockquote>
-<p>The wrapping behavior for the S texture coordinate.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> wrapS: <span class="type">SCNWrapMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。</p>
-<p>S纹理坐标测量纹理图像的水平轴，从图像左边缘的0.0增加到右边缘的1.0。</p>
-<p>默认的包装模式是SCNWrapMode.clamp。请参阅SCNWrapMode了解可用模式及其效果。</p>
-<h2 id="var-wrapT-SCNWrapMode"><a href="#var-wrapT-SCNWrapMode" class="headerlink" title="var wrapT: SCNWrapMode"></a>var wrapT: SCNWrapMode</h2><blockquote>
-<p>The wrapping behavior for the T texture coordinate.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> wrapT: <span class="type">SCNWrapMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。</p>
-<p>纹理坐标测量纹理图像的纵轴，从图像底部的0.0增加到顶部的1.0。</p>
-<p>默认的包装模式是SCNWrapMode.clamp。请参阅SCNWrapMode了解可用模式及其效果。</p>
-<h2 id="enum-SCNWrapMode"><a href="#enum-SCNWrapMode" class="headerlink" title="enum SCNWrapMode"></a>enum SCNWrapMode</h2><blockquote>
-<p>Modes to apply to texture wrapping, used by the <code>wrapT</code> and <code>wrapS</code> properties.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNWrapMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">clamp</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">coordinates</span> <span class="title">are</span> <span class="title">clamped</span> <span class="title">to</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0, <span class="title">inclusive</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> `<span class="title">repeat</span>`</span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">uses</span> <span class="title">only</span> <span class="title">the</span> <span class="title">fractional</span> <span class="title">part</span> <span class="title">of</span> <span class="title">texture</span> <span class="title">coordinates</span>, <span class="title">passing</span> <span class="title">through</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> (<span class="title">but</span> <span class="title">not</span> <span class="title">including</span>) 1.0.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">clampToBorder</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">uses</span> <span class="title">texture</span> <span class="title">colors</span> <span class="title">for</span> <span class="title">coordinates</span> <span class="title">in</span> <span class="title">the</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0 (<span class="title">inclusive</span>) <span class="title">and</span> <span class="title">the</span> <span class="title">material</span> <span class="title">property</span>’<span class="title">s</span> <span class="title">borderColor</span> <span class="title">value</span> <span class="title">otherwise</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">mirror</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">sampling</span> <span class="title">of</span> <span class="title">texture</span> <span class="title">coordinates</span> <span class="title">outside</span> <span class="title">range</span> <span class="title">from</span> 0.0 <span class="title">to</span> 1.0 <span class="title">should</span> <span class="title">behave</span> <span class="title">as</span> <span class="title">if</span> <span class="title">the</span> <span class="title">range</span> <span class="title">reverses</span> <span class="title">before</span> <span class="title">repeating</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
-<p>包装模式决定了材质纹理坐标超出0.0到1.0范围的情况下的纹理映射行为。例如，如果您使用contentsTransform属性来收缩相对于几何图形表面的纹理，那么您将使用wrap模式属性来确定纹理是否在表面上重复。下图显示了每种包装模式对其他相同材料的影响。</p>
-<p><img src="/2018/12/11/SCNMaterialProperty/a708d857-d063-472e-96ca-70976eb62c49.png" alt="img"></p>
-<h2 id="var-minificationFilter-SCNFilterMode"><a href="#var-minificationFilter-SCNFilterMode" class="headerlink" title="var minificationFilter: SCNFilterMode"></a>var minificationFilter: SCNFilterMode</h2><blockquote>
-<p>Texture filtering for rendering the material property’s image contents at a size smaller than that of the original image.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> minificationFilter: <span class="type">SCNFilterMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="var-magnificationFilter-SCNFilterMode"><a href="#var-magnificationFilter-SCNFilterMode" class="headerlink" title="var magnificationFilter: SCNFilterMode"></a>var magnificationFilter: SCNFilterMode</h2><blockquote>
-<p>Texture filtering for rendering the material property’s image contents at a size larger than that of the original image.</p>
-</blockquote>
-<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，纹理坐标在远离摄像机的一点可能对应于纹理图像中几个像素的区域。SceneKit使用缩小过滤器来确定采样texel在该点的颜色。</p>
-<p>默认的缩小过滤器是scnfilter.linear。请参阅SCNWrapMode了解可用模式及其效果。</p>
-<h2 id="var-mipFilter-SCNFilterMode"><a href="#var-mipFilter-SCNFilterMode" class="headerlink" title="var mipFilter: SCNFilterMode"></a>var mipFilter: SCNFilterMode</h2><blockquote>
-<p>Texture filtering for using mipmaps to render the material property’s image contents at a size smaller than that of the original image.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> magnificationFilter: <span class="type">SCNFilterMode</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，在摄像机附近的一个点上的纹理坐标可能对应于纹理图像中像素的一小部分。SceneKit使用放大过滤器来确定采样texel在该点的颜色。</p>
-<p>默认的放大过滤器是scnfilter.linear。请参阅SCNWrapMode了解可用模式及其效果。</p>
-<h2 id="enum-SCNFilterMode"><a href="#enum-SCNFilterMode" class="headerlink" title="enum SCNFilterMode"></a>enum SCNFilterMode</h2><blockquote>
-<p>Texture filtering modes, used by the <code>minificationFilter</code>,<code>magnificationFilter</code>, and <code>mipFilter</code> properties.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SCNFilterMode</span> : <span class="title">Int</span></span></span><br><span class="line"><span class="class">'''</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">none</span></span></span><br><span class="line"><span class="class">//<span class="title">No</span> <span class="title">texture</span> <span class="title">filtering</span> <span class="title">is</span> <span class="title">applied</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">nearest</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">filtering</span> <span class="title">returns</span> <span class="title">the</span> <span class="title">color</span> <span class="title">from</span> <span class="title">only</span> <span class="title">one</span> <span class="title">texel</span>, <span class="title">whose</span> <span class="title">location</span> <span class="title">is</span> <span class="title">nearest</span> <span class="title">to</span> <span class="title">the</span> <span class="title">coordinates</span> <span class="title">being</span> <span class="title">sampled</span>.</span></span><br><span class="line"><span class="class"><span class="title">case</span> <span class="title">linear</span></span></span><br><span class="line"><span class="class">//<span class="title">Texture</span> <span class="title">filtering</span> <span class="title">sample</span> <span class="title">texels</span> <span class="title">from</span> <span class="title">the</span> <span class="title">neighborhood</span> <span class="title">of</span> <span class="title">the</span> <span class="title">coordinates</span> <span class="title">being</span> <span class="title">sampled</span> <span class="title">and</span> <span class="title">linearly</span> <span class="title">interpolates</span> <span class="title">their</span> <span class="title">colors</span>.</span></span><br><span class="line"><span class="class">'''</span></span><br></pre></td></tr></table></figure>
-<p>当材质表面的某些部分看起来比原始纹理图像大或小时，纹理过滤决定材质属性内容的外观。例如，当纹理被应用到一个远离相机的平面上时:</p>
-<p>在相机附近的一个点的纹理坐标可以对应原始图像中一个像素的一小部分。SceneKit使用放大率过滤器属性来确定采样后的texel的颜色。</p>
-<p>纹理坐标在远离摄像机的一点可能对应于原始图像中几个像素的区域。SceneKit使用minificationFilter属性来确定采样texel的颜色。</p>
-<p>SceneKit还在为纹理图像生成mipmap级别时使用mipFilter属性指定的过滤器。</p>
-<h2 id="var-maxAnisotropy-CGFloat"><a href="#var-maxAnisotropy-CGFloat" class="headerlink" title="var maxAnisotropy: CGFloat"></a>var maxAnisotropy: CGFloat</h2><blockquote>
-<p>The amount of anisotropic texture filtering to be used when rendering the material property’s image contents.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> maxAnisotropy: <span class="type">CGFloat</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>各向异性滤波是一种提高纹理呈现质量的过程，当纹理表面出现一个相对于相机的极端角度。这个过程通过从纹理的多个mipmap级别对每个呈现的像素进行采样来完成——各向异性是指每个像素的采样数量。各向异性越高，渲染质量越好，但渲染性能越差。</p>
-<p>例如，下图左边的图像没有使用各向异性滤波，导致在棋盘模式后退到一定距离时呈现工件。其他图像使用更高的maxAnisotropy值，减少了呈现伪影。各向异性滤波需要mipmap，因此只有当mipFilter属性的值不是scnfilter.none时，该属性才生效。</p>
-<p><img src="/2018/12/11/SCNMaterialProperty/5a2465a2-a8ab-42ae-9f73-bf6c1af20af2.png" alt="img"></p>
-<p>SceneKit会根据需要自动增加或减少每个渲染像素的各向异性，以最大限度地提高渲染质量，直到该属性指定的限制。绘制时所使用的最大各向异性电平取决于所使用的图形硬件。将此属性的值设置为MAXFLOAT常量(默认值)，以使用GPU支持的最高各向异性级别。最大各向异性值为1.0或更低将禁用各向异性过滤。</p>
-<h2 id="var-mappingChannel-Int"><a href="#var-mappingChannel-Int" class="headerlink" title="var mappingChannel: Int"></a>var mappingChannel: Int</h2><blockquote>
-<p>The source of texture coordinates for mapping the material property’s image contents.</p>
-</blockquote>
-<figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mappingChannel: <span class="type">Int</span> &#123; <span class="keyword">get</span> <span class="keyword">set</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>一个几何图形可以有多个独立的纹理坐标来源，每个来源都定义一个唯一的映射通道号。您可以使用这些通道以不同的方式映射材料的不同视觉属性。例如，表示图片框的几何图形可以使用一组纹理坐标来映射图片本身的材质，而另一组纹理坐标可以将图片放到图片框中。</p>
-<p>有关使用多个纹理映射通道创建几何图形的信息，请参见SCNGeometry。</p>
-<hr>
-]]></content>
-      <categories>
-        <category>Swift</category>
-        <category>SceneKit</category>
-        <category>SCNMaterialProperty</category>
-      </categories>
-      <tags>
-        <tag>Swift</tag>
-        <tag>SceneKit</tag>
-        <tag>SCNMaterialProperty</tag>
       </tags>
   </entry>
   <entry>
